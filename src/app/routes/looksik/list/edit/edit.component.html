@@ -1,0 +1,99 @@
+<div class="modal-header">
+  <div class="modal-title">查看详情</div>
+</div>
+
+<form nz-form>
+  <nz-collapse [nzBordered]="false" >
+    <nz-collapse-panel  [nzHeader]="''" [ngStyle]="{'color':'#f7f7f7'}" [nzActive]="true" [nzShowArrow]='false'>
+      <div nz-row nzType="flex" >
+        <div nz-col nzSpan="7">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="lienPersonnelid" style="font-weight: 700" nzRequired>代号</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input  [disabled]="true" id="lienPersonnelid" placeholder="请输入代号"  [(ngModel)]="daiHao" name="daiHao">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="7">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="submitId">上报人</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input  [disabled]="true" id="submitId" placeholder="请输入内容"  [(ngModel)]="nurse.submitId" name="submitId">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="7">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="submitTime">上报时间</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-date-picker  id="submitTime" [disabled]="true" [nzFormat]="'yyyy-MM-dd'" [(ngModel)]="nurse.submitTime" name="submitTime"></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row nzType="flex">
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-control [nzSm]="22" [nzXs]="24">
+              <nz-table #basicTable [nzData]="lienPersonnelTanHuaRelateLists">
+                <thead>
+                <tr>
+                  <th>谈话人</th>
+                  <th>开始时间</th>
+                  <th>结束时间</th>
+                  <th>备注</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let relate of basicTable.data">
+                  <td><span nz-tooltip nzTitle="{{relate?.tanHuaRen}}">{{((relate?.tanHuaRen?.length) === 5) ? (relate?.tanHuaRen.substring(0,5)):relate?.tanHuaRen}}</span></td>
+                  <td><span nz-tooltip nzTitle="{{relate?.talkStartTime}}">{{((relate?.talkStartTime?.length) === 19) ? (relate?.talkStartTime.substring(10,19)):relate?.talkStartTime}}</span></td>
+                  <td><span nz-tooltip nzTitle="{{relate?.talkEndTime}}">{{((relate?.talkEndTime?.length) === 19) ? (relate?.talkEndTime.substring(10,19)):relate?.talkEndTime}}</span></td>
+                  <td><span nz-tooltip nzTitle="{{relate?.remark}}">{{((relate?.remark?.length) === 7) ? (relate?.remark.substring(0,7)):relate?.remark}}</span></td>
+                </tr>
+                </tbody>
+              </nz-table>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row  nzSpan="24">
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label [nzSm]="3"  nzFor="cateringRemarks">餐饮情况</nz-form-label>
+            <nz-form-control [nzSm]="19" >
+              <textarea nz-input  id="cateringRemarks" [disabled]="true" placeholder="请输入内容" name="cateringRemarks"
+                        [nzAutosize]="{ minRows: 3, maxRows: 16 }" [(ngModel)]="nurse.cateringRemarks"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="3"  nzFor="conditionRemarks">情绪情况</nz-form-label>
+            <nz-form-control [nzSm]="19" [nzXs]="24">
+              <textarea nz-input  id="conditionRemarks"  [disabled]="true" placeholder="请输入内容" name="conditionRemarks"
+                        [nzAutosize]="{ minRows: 3, maxRows: 16 }" [(ngModel)]="nurse.conditionRemarks"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="3"  nzFor="restsRemarks">其他情况</nz-form-label>
+            <nz-form-control [nzSm]="19" >
+              <textarea nz-input  id="restsRemarks"  [disabled]="true" placeholder="请输入内容" name="restsRemarks"
+                        [nzAutosize]="{ minRows: 3, maxRows: 16 }" [(ngModel)]="nurse.restsRemarks"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="3"  nzFor="noinquiry">被调查对象非讯问时间情况</nz-form-label>
+            <nz-form-control [nzSm]="19" >
+              <textarea nz-input  [disabled]="true" id="noinquiry"  placeholder="请输入内容" name="noinquiry"
+                        [nzAutosize]="{ minRows: 3, maxRows: 16 }" [(ngModel)]="nurse.noinquiry">
+              </textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-collapse-panel>
+  </nz-collapse>
+</form>
+
+
+
+

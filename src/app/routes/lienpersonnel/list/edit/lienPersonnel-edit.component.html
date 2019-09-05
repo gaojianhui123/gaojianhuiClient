@@ -1,0 +1,353 @@
+<!--<page-header [breadcrumb]="breadcrumb">-->
+  <!--<ng-template #breadcrumb>-->
+    <!--<nz-breadcrumb>-->
+      <!--<nz-breadcrumb-item><a [routerLink]="['/lienpersonnel']">进驻登记</a></nz-breadcrumb-item>-->
+      <!--<nz-breadcrumb-item><a>{{title1}}</a></nz-breadcrumb-item>-->
+    <!--</nz-breadcrumb>-->
+  <!--</ng-template>-->
+  <!--<div class="breadcrumb">-->
+    <!--<div class="ml-auto">-->
+      <!--<h2>{{title1}}</h2>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</page-header>-->
+<form nz-form [formGroup]="validateForm">
+  <nz-collapse [nzBordered]="false">
+    <nz-collapse-panel [nzHeader]="''" [ngStyle]="{'color':'#f7f7f7'}" [nzActive]="true" [nzDisabled]='true'
+                       [nzShowArrow]='false'>
+      <div nz-row nzType="flex">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="enterTime">进驻时间</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-date-picker formControlName="enterTime" id="enterTime" [nzFormat]="'yyyy-MM-dd'" style="width: 100%;"
+                              [(ngModel)]="lienPersonnel.enterTime"></nz-date-picker>
+              <nz-form-explain *ngIf="validateForm.get('enterTime').dirty && validateForm.get('enterTime').errors">
+                请选择进驻时间!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="outTime">撤离时间</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-date-picker formControlName="outTime" id="outTime" [nzFormat]="'yyyy-MM-dd'" style="width: 100%;"
+                              [(ngModel)]="lienPersonnel.outTime"></nz-date-picker>
+              <!--<nz-form-explain *ngIf="validateForm.get('outTime').dirty && validateForm.get('outTime').errors">-->
+              <!--请选择撤离时间!-->
+              <!--</nz-form-explain>-->
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label  *ngIf="lienPersonnel.cuoShiType === '0'" [nzSm]="6" [nzXs]="24" nzFor="daiHao">留置人代号</nz-form-label>
+            <nz-form-label  *ngIf="lienPersonnel.cuoShiType === '1'" [nzSm]="6" [nzXs]="24" nzFor="daiHao">监拘人代号</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input formControlName="daiHao" id="daiHao" placeholder="请输入代号"
+                     [(ngModel)]="lienPersonnel.daiHao" required="true">
+              <nz-form-explain *ngIf="validateForm.get('daiHao').dirty && validateForm.get('daiHao').errors">请输入留置人代号!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="cbDepartment">承办部门</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-select [nzAllowClear]="true" formControlName="cbDepartment" id="cbDepartment"
+                         [(ngModel)]="lienPersonnel.cbDepartment" nzPlaceHolder="请选择承办部门">
+                <nz-option *ngFor="let option of bumencontentPage.content" [nzLabel]="option.dicName" [nzValue]="option.id"></nz-option>
+              </nz-select>
+              <nz-form-explain
+                *ngIf="validateForm.get('cbDepartment').dirty && validateForm.get('cbDepartment').errors">请选择承办部门!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+<!--            <nz-form-label *ngIf="lienPersonnel.cuoShiType === '0'" [nzSm]="6" [nzXs]="24" nzFor="roomNum">留置房间号</nz-form-label>-->
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="roomNum">房间号</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+<!--              <input nz-input formControlName="roomNum" id="roomNum" placeholder="请输入房间号"-->
+<!--                     [(ngModel)]="lienPersonnel.roomNum">-->
+              <nz-select style="width: 100%" formControlName="roomNum" id="roomNum"
+                         [(ngModel)]="lienPersonnel.roomNum" nzShowSearch
+                         (ngModelChange)="selectRoomChange($event)" nzPlaceHolder="请选择房间号">
+                <nz-option *ngFor="let room of roomData" [nzValue]="room.id" [nzLabel]="room.title"></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="validateForm.get('roomNum').dirty && validateForm.get('roomNum').errors">
+                请选择房间号!
+              </nz-form-explain>
+<!--              <nz-select style="width: 120px;" [(ngModel)]="selectedCity">-->
+<!--                <nz-option *ngFor="let c of cityData[selectedProvince]" [nzValue]="c" [nzLabel]="c"></nz-option>-->
+<!--              </nz-select>-->
+
+            </nz-form-control>
+            <!--以下是之前获取的立方系统的房间号，是下拉选择的，后来有说要改成说缛字符串了-->
+            <!--<nz-form-control [nzSm]="14" [nzXs]="24">-->
+            <!--<nz-select [nzAllowClear]="true" formControlName="roomNum" id="roomNum" nzShowSearch-->
+            <!--[(ngModel)]="lienPersonnel.roomNum" nzPlaceHolder="请选择房间号">-->
+            <!--<nz-option *ngFor="let option of doorMunDtos" [nzLabel]="option.areaName" [nzValue]="option.areaName"></nz-option>-->
+            <!--</nz-select>-->
+            <!--<nz-form-explain *ngIf="validateForm.get('roomNum').dirty && validateForm.get('roomNum').errors">-->
+            <!--请输入房间号!-->
+            <!--</nz-form-explain>-->
+            <!--</nz-form-control>-->
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="roomNum">床位号</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-select style="width: 100%" formControlName="bedNum" id="bedNum"
+                         [(ngModel)]="lienPersonnel.bedNum" nzShowSearch
+                         nzPlaceHolder="请输入床位号">
+                <nz-option *ngFor="let bed of bedData" [nzValue]="bed.id" [nzLabel]="bed.title"></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="validateForm.get('bedNum').dirty && validateForm.get('bedNum').errors">
+                请选择床位号!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="kanhuLiLiang">看护力量</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-select [nzAllowClear]="true" formControlName="kanhuLiLiang" id="kanhuLiLiang"
+                         [(ngModel)]="lienPersonnel.kanhuLiLiang" nzPlaceHolder="请选择看护力量">
+                <nz-option *ngFor="let option of kanhucontentPage.content" [nzLabel]="option.dicName" [nzValue]="option.id"></nz-option>
+              </nz-select>
+              <nz-form-explain
+                *ngIf="validateForm.get('kanhuLiLiang').dirty && validateForm.get('kanhuLiLiang').errors">请选择看护力量!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="cuoShiType">措施种类</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-select [nzAllowClear]="false" formControlName="cuoShiType" id="cuoShiType"
+                         [(ngModel)]="lienPersonnel.cuoShiType"
+                         nzPlaceHolder="请选择措施种类">
+                <nz-option [nzLabel]="'留置'" [nzValue]="'0'"></nz-option>
+                <nz-option [nzLabel]="'监拘'" [nzValue]="'1'"></nz-option>
+              </nz-select>
+              <nz-form-explain
+                *ngIf="validateForm.get('cuoShiType').dirty && validateForm.get('cuoShiType').errors">请选择措施种类!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="yihurenyuan">医护人员</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-select [nzAllowClear]="true" formControlName="yihurenyuan" id="yihurenyuan"
+                         [(ngModel)]="lienPersonnel.yihurenyuan" nzPlaceHolder="请选择医护人员">
+                <nz-option *ngFor="let option of yihucontentPage.content" [nzLabel]="option.dicName" [nzValue]="option.id"></nz-option>
+              </nz-select>
+              <nz-form-explain
+                *ngIf="validateForm.get('yihurenyuan').dirty && validateForm.get('yihurenyuan').errors">请选择看护力量!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label  *ngIf="lienPersonnel.cuoShiType === '0'" [nzSm]="6" [nzXs]="24" nzFor="lzName">留置人姓名</nz-form-label>
+            <nz-form-label  *ngIf="lienPersonnel.cuoShiType === '1'" [nzSm]="6" [nzXs]="24" nzFor="lzName">监拘人姓名</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input formControlName="lzName" id="lzName" placeholder="请输入姓名"
+                     [(ngModel)]="lienPersonnel.lzName">
+              <nz-form-explain *ngIf="validateForm.get('lzName').dirty && validateForm.get('lzName').errors">请输入姓名!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label  *ngIf="lienPersonnel.cuoShiType === '0'" [nzSm]="6" [nzXs]="24" nzFor="lzSex">留置人性别</nz-form-label>
+            <nz-form-label  *ngIf="lienPersonnel.cuoShiType === '1'" [nzSm]="6" [nzXs]="24" nzFor="lzSex">监拘人性别</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-select [nzAllowClear]="true" formControlName="lzSex" id="lzSex" [(ngModel)]="lienPersonnel.lzSex"
+                         nzPlaceHolder="请选择性别" required="true">
+                <nz-option [nzLabel]="'男'" [nzValue]="'1'"></nz-option>
+                <nz-option [nzLabel]="'女'" [nzValue]="'2'"></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="validateForm.get('lzSex').dirty && validateForm.get('lzSex').errors">请选择性别!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="birthDay">出生年月</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-date-picker formControlName="birthDay" id="birthDay" [nzFormat]="'yyyy-MM-dd'" style="width: 100%;"
+                              [(ngModel)]="lienPersonnel.birthDay"></nz-date-picker>
+              <nz-form-explain *ngIf="validateForm.get('birthDay').dirty && validateForm.get('birthDay').errors">
+                请选择出生年月!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label  *ngIf="lienPersonnel.cuoShiType === '0'" [nzSm]="6" [nzXs]="24" nzFor="lzAge">留置人年龄</nz-form-label>
+            <nz-form-label  *ngIf="lienPersonnel.cuoShiType === '1'" [nzSm]="6" [nzXs]="24" nzFor="lzAge">监拘人年龄</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input formControlName="lzAge" id="lzAge" placeholder="请输入年龄"
+                     [(ngModel)]="lienPersonnel.lzAge">
+              <nz-form-explain *ngIf="validateForm.get('lzAge').dirty && validateForm.get('lzAge').errors">请输入年龄!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="lzMinZu">民族</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-select  [nzAllowClear]="true"  formControlName="lzMinZu" id="lzMinZu" [(ngModel)]="lienPersonnel.lzMinZu" nzPlaceHolder="请选择民族" >
+                <nz-option *ngFor="let option of dictionarycontentPage.content" [nzLabel]="option.dicName" [nzValue]="option.id"></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="validateForm.get('lzMinZu').dirty && validateForm.get('lzMinZu').errors">请选择民族!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="lzDanWei">单位</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input formControlName="lzDanWei" id="lzDanWei" placeholder="请输入单位"
+                     [(ngModel)]="lienPersonnel.lzDanWei">
+              <nz-form-explain *ngIf="validateForm.get('lzDanWei').dirty && validateForm.get('lzDanWei').errors">请输入单位!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="lzZhiWu">职务</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input formControlName="lzZhiWu" id="lzZhiWu" placeholder="请输入职务"
+                     [(ngModel)]="lienPersonnel.lzZhiWu">
+              <nz-form-explain *ngIf="validateForm.get('lzZhiWu').dirty && validateForm.get('lzZhiWu').errors">请输入职务!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="lzZhiJi">职级</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-select [nzAllowClear]="true" formControlName="lzZhiJi" id="lzZhiJi"
+                         [(ngModel)]="lienPersonnel.lzZhiJi"
+                         nzPlaceHolder="请选择职级">
+                <nz-option [nzLabel]="'局级以上'" [nzValue]="'1'"></nz-option>
+                <nz-option [nzLabel]="'局级'" [nzValue]="'2'"></nz-option>
+                <nz-option [nzLabel]="'副局级'" [nzValue]="'3'"></nz-option>
+                <nz-option [nzLabel]="'处级'" [nzValue]="'4'"></nz-option>
+                <nz-option [nzLabel]="'副处级'" [nzValue]="'5'"></nz-option>
+                <nz-option [nzLabel]="'科级'" [nzValue]="'6'"></nz-option>
+                <nz-option [nzLabel]="'副科级'" [nzValue]="'7'"></nz-option>
+                <nz-option [nzLabel]="'科级以下'" [nzValue]="'8'"></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="validateForm.get('lzZhiJi').dirty && validateForm.get('lzZhiJi').errors">请选择职级!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="zhuanAnName">专案名称</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input formControlName="zhuanAnName" id="zhuanAnName" placeholder="请输入专案名称"
+                     [(ngModel)]="lienPersonnel.zhuanAnName">
+              <nz-form-explain *ngIf="validateForm.get('zhuanAnName').dirty && validateForm.get('zhuanAnName').errors">
+                请填写专案名称!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="linkman">专案联系人</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input formControlName="linkman" id="linkman" placeholder="请输入专案联系人"
+                     [(ngModel)]="lienPersonnel.linkman">
+              <nz-form-explain *ngIf="validateForm.get('linkman').dirty && validateForm.get('linkman').errors">请输入专案联系人!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label  *ngIf="lienPersonnel.cuoShiType === '0'" [nzSm]="6" [nzXs]="24" nzFor="lzQiXian">留置期限</nz-form-label>
+            <nz-form-label  *ngIf="lienPersonnel.cuoShiType === '1'" [nzSm]="6" [nzXs]="24" nzFor="lzQiXian">监拘期限</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-select [nzAllowClear]="true" formControlName="lzQiXian" id="lzQiXian"
+                         [(ngModel)]="lienPersonnel.lzQiXian"
+                         nzPlaceHolder="请选择期限">
+                <nz-option [nzLabel]="'3个月'" [nzValue]="'1'"></nz-option>
+                <nz-option [nzLabel]="'6个月'" [nzValue]="'2'"></nz-option>
+                <nz-option [nzLabel]="'1年'" [nzValue]="'3'"></nz-option>
+                <nz-option [nzLabel]="'3年'" [nzValue]="'4'"></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="validateForm.get('lzQiXian').dirty && validateForm.get('lzQiXian').errors">
+                请选择期限!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="telNum">专案联系人电话</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input formControlName="telNum" id="telNum" placeholder="请输入专案联系人电话"
+                     [(ngModel)]="lienPersonnel.telNum">
+              <nz-form-explain *ngIf="validateForm.get('telNum').dirty && validateForm.get('telNum').errors">请输入专案联系人电话!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="telNum">相关文件</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-upload
+                [nzFileList]="attachmentFiles"
+                [nzCustomRequest]="customReq"
+                (nzChange)="attachmentFilesChange($event)">
+                <!--<button nz-button>-->
+                <div>
+                  <button nz-button nzType="primary"><i class="anticon anticon-upload"></i>选择附件</button>
+                  <!--<button nz-button nzType="primary"><i class="anticon anticon-upload"></i> 点击上传</button>-->
+                </div>
+                <!--</button>-->
+                <!--<div>-->
+                <!--<img [src]="imgUrl " *ngIf="imgUrl">-->
+                <!--</div>-->
+              </nz-upload>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-collapse-panel>
+  </nz-collapse>
+  <br>
+
+  <div nz-row nzType="flex" nzJustify="center">
+    <nz-form-item nz-row style="margin-bottom:8px;">
+      <nz-form-control>
+        <button nz-button  [nzSize]="'large'" nzType="primary" (click)="closed()">关闭</button>
+        <button nz-button nzType="primary" nzSize="large" (click)="submitForm()" [nzLoading]="isLoading">保存</button>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>

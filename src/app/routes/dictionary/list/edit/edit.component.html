@@ -1,0 +1,95 @@
+<page-header [breadcrumb]="breadcrumb">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item><a [routerLink]="['/dictionary']">字典管理</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>字典{{title}}</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+  <div class="breadcrumb">
+    <div class="ml-auto">
+      <h2>字典{{title}}</h2>
+    </div>
+  </div>
+</page-header>
+<nz-card>
+  <form nz-form [formGroup]="dictionaryForm">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzRequired nzFor="dsId">所属分类</nz-form-label>
+      <nz-form-control [nzSpan]="8">
+          <nz-select formControlName="dsId" name="dsId" style="width: 100%;" nzPlaceHolder="请选择分类" [(ngModel)]="dictionary.dsId"
+                     (nzScrollToBottom)="loadMore()"  nzAllowClear>
+          <!--<nz-option [nzLabel]="'是'" [nzValue]="'0'"></nz-option>-->
+          <!--<nz-option [nzLabel]="'否'" [nzValue]="'1'"></nz-option>-->
+          <nz-option *ngFor="let o of optionDictsort" [nzValue]="o.id" [nzLabel]="o.dictsortName"></nz-option>
+          <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+            <i nz-icon type="loading" class="loading-icon"></i> Loading Data...
+          </nz-option>
+        </nz-select>
+        <nz-form-explain *ngIf="dictionaryForm.get('dsId').dirty && dictionaryForm.get('dsId').errors">
+          此项为必填项
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzRequired nzFor="dicName">字典名称</nz-form-label>
+      <nz-form-control [nzSpan]="8">
+        <input nz-input formControlName="dicName" name="dicName" style="width: 100%;" nzPlaceHolder="请输入字典名称"
+               [(ngModel)]="dictionary.dicName">
+        <nz-form-explain *ngIf="dictionaryForm.get('dicName').dirty && dictionaryForm.get('dicName').errors">
+          此项为必填项
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzRequired nzFor="dicIndex">排序</nz-form-label>
+      <nz-form-control [nzSpan]="8">
+        <nz-input-number nz-input formControlName="dicIndex" name="dicIndex" style="width: 100%;"
+                         nzPlaceHolder="请输入排序"
+                   [(ngModel)]="dictionary.dicIndex">
+        </nz-input-number>
+        <nz-form-explain *ngIf="dictionaryForm.get('dicIndex').dirty && dictionaryForm.get('dicIndex').errors">
+          此项为必填项
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <!--<nz-form-item>-->
+      <!--<nz-form-label [nzSpan]="4" nzRequired nzFor="dicPyCode">拼音码</nz-form-label>-->
+      <!--<nz-form-control [nzSpan]="8">-->
+        <!--<input nz-input formControlName="dicPyCode" name="dicPyCode" style="width: 100%;" nzPlaceHolder="请输入拼音码"-->
+                   <!--[(ngModel)]="dictionary.dicPyCode">-->
+        <!--<nz-form-explain *ngIf="dictionaryForm.get('dicPyCode').dirty && dictionaryForm.get('dicPyCode').errors">-->
+          <!--此项为必填项-->
+        <!--</nz-form-explain>-->
+      <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzRequired nzFor="isOwner">是否自用</nz-form-label>
+      <nz-form-control [nzSpan]="8">
+        <nz-select formControlName="isOwner" name="isOwner" style="width: 100%;" nzPlaceHolder="请选择是否自用"
+                   [(ngModel)]="dictionary.isOwner">
+          <nz-option [nzLabel]="'是'" [nzValue]="0"></nz-option>
+          <nz-option [nzLabel]="'否'" [nzValue]="1"></nz-option>
+        </nz-select>
+        <nz-form-explain *ngIf="dictionaryForm.get('isOwner').dirty && dictionaryForm.get('isOwner').errors">
+          此项为必填项
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzFor="dicMemo">备注</nz-form-label>
+      <nz-form-control [nzSpan]="8">
+        <textarea nz-input formControlName="dicMemo" name="dicMemo" style="width: 100%;" nzPlaceHolder="请输入备注"
+                   [(ngModel)]="dictionary.dicMemo">
+        </textarea>
+      </nz-form-control>
+    </nz-form-item>
+    <div nz-row nzType="flex" nzJustify="center">
+      <nz-form-item nz-row style="margin-bottom:8px;">
+        <nz-form-control>
+          <button nz-button  nzType="primary" (click)="closed()">关闭</button>
+          <button nz-button nzType="primary" (click)="save()">保存</button>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </form>
+</nz-card>

@@ -1,0 +1,46 @@
+<page-header [breadcrumb]="breadcrumb">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item><a [routerLink]="['/dictsort']">字典分类</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>字典分类{{title}}</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+  <div class="breadcrumb">
+    <div class="ml-auto">
+      <h2>字典分类{{title}}</h2>
+    </div>
+  </div>
+</page-header>
+<nz-card>
+  <form nz-form [formGroup]="dictsortForm">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzRequired nzFor="dictsortName">分类名称</nz-form-label>
+      <nz-form-control [nzSpan]="8">
+        <input nz-input formControlName="dictsortName" name="dictsortName" style="width: 100%;" nzPlaceHolder="请输入分类名称"
+                   [(ngModel)]="dictsort.dictsortName">
+        <nz-form-explain *ngIf="dictsortForm.get('dictsortName').dirty && dictsortForm.get('dictsortName').errors">
+          此项为必填项
+        </nz-form-explain>
+      </nz-form-control>
+      <nz-form-label [nzSpan]="4" nzRequired nzFor="isOwner">是否自用</nz-form-label>
+      <nz-form-control [nzSpan]="8">
+        <nz-select formControlName="isOwner" name="isOwner" style="width: 100%;" nzPlaceHolder="请输入分类名称"
+                   [(ngModel)]="dictsort.isOwner">
+          <nz-option [nzLabel]="'是'" [nzValue]="0"></nz-option>
+          <nz-option [nzLabel]="'否'" [nzValue]="1"></nz-option>
+        </nz-select>
+        <nz-form-explain *ngIf="dictsortForm.get('isOwner').dirty && dictsortForm.get('isOwner').errors">
+          此项为必填项
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <div nz-row nzType="flex" nzJustify="center">
+      <nz-form-item nz-row style="margin-bottom:8px;">
+        <nz-form-control>
+          <button nz-button   nzType="primary" (click)="closed()">关闭</button>
+          <button nz-button nzType="primary" (click)="save()">保存</button>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </form>
+</nz-card>

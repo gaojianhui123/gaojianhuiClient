@@ -1,0 +1,440 @@
+<br>
+<nz-breadcrumb>
+  <nz-breadcrumb-item>
+    <a [routerLink]="['/']">首页</a>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    <a [routerLink]="[daohang]">{{biaoti}}</a>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    <a>查看详情</a>
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+<nz-tabset>
+  <nz-tab nzTitle="进驻登记">
+    <br>
+    <form nz-form>
+      <nz-collapse [nzBordered]="false">
+        <nz-collapse-panel [nzHeader]="''" [ngStyle]="{'color':'#f7f7f7'}" [nzActive]="true"
+                           [nzShowArrow]='false'>
+          <div nz-row nzType="flex">
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">进驻时间</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <nz-date-picker name="enterTime" id="enterTime" [nzFormat]="'yyyy-MM-dd'"
+                                  style="width: 100%;"
+                                  [(ngModel)]="lienPersonnel.enterTime" disabled="true"></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">撤离时间</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <nz-date-picker name="outTime" id="outTime" [nzFormat]="'yyyy-MM-dd'" style="width: 100%;"
+                                  [(ngModel)]="lienPersonnel.outTime" disabled="true"></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">留置人代号</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input name="daiHao" id="daiHao" placeholder="请输入留置人代号"
+                         [(ngModel)]="lienPersonnel.daiHao" disabled="true">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">承办部门</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <nz-select [nzAllowClear]="true" disabled name="cbDepartment" id="cbDepartment"
+                             [(ngModel)]="lienPersonnel.cbDepartment" nzPlaceHolder="请选择承办部门">
+                    <nz-option *ngFor="let option of bumencontentPage.content" [nzLabel]="option.dicName"
+                               [nzValue]="option.id"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <!--              <nz-form-item>-->
+            <!--                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="roomNum">留置人员房间号</nz-form-label>-->
+            <!--                <nz-form-control [nzSm]="14" [nzXs]="24">-->
+            <!--                  <input nz-input name="roomNum" id="roomNum" placeholder="请输入留置人员房间号"-->
+            <!--                         [(ngModel)]="lienPersonnel.roomNum" disabled="true">-->
+            <!--                </nz-form-control>-->
+            <!--              </nz-form-item>-->
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+<!--                <nz-form-label *ngIf="lienPersonnel.cuoShiType === '0'" [nzSm]="6" [nzXs]="24" nzFor="roomNum">留置房间号-->
+<!--                </nz-form-label>-->
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="roomNum">房间号
+                </nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input name="roomNum" id="roomNum" placeholder="请输入房间号"
+                         [(ngModel)]="lienPersonnel.roomNumName" disabled="true">
+                  <!--                    <nz-select style="width: 100%" id="roomNum"-->
+                  <!--                               [(ngModel)]="lienPersonnel.roomNum" nzShowSearch-->
+                  <!--                               (ngModelChange)="selectRoomChange($event)" nzPlaceHolder="请输入房间号">-->
+                  <!--                      <nz-option *ngFor="let room of roomData" [nzValue]="room.id" [nzLabel]="room.title"></nz-option>-->
+                  <!--                    </nz-select>-->
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">床位号</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input name="bedNum" id="bedNum" placeholder="请输入房间号"
+                         [(ngModel)]="lienPersonnel.bedNumName" disabled="true">
+                  <!--                    <nz-select style="width: 100%" id="bedNum"-->
+                  <!--                               [(ngModel)]="lienPersonnel.bedNum" nzShowSearch-->
+                  <!--                               nzPlaceHolder="请输入房间号">-->
+                  <!--                      <nz-option *ngFor="let bed of bedData" [nzValue]="bed.id" [nzLabel]="bed.title"></nz-option>-->
+                  <!--                    </nz-select>-->
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">看护力量</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <nz-select [nzAllowClear]="true" disabled name="kanhuLiLiang" id="kanhuLiLiang"
+                             [(ngModel)]="lienPersonnel.kanhuLiLiang" nzPlaceHolder="请选择看护力量">
+                    <nz-option *ngFor="let option of kanhucontentPage.content" [nzLabel]="option.dicName"
+                               [nzValue]="option.id"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">措施种类</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <nz-select [nzAllowClear]="true" name="cuoShiType" id="cuoShiType" disabled="true"
+                             [(ngModel)]="lienPersonnel.cuoShiType"
+                             nzPlaceHolder="请选择措施种类">
+                    <nz-option [nzLabel]="'留置'" [nzValue]="'0'"></nz-option>
+                    <nz-option [nzLabel]="'监居'" [nzValue]="'1'"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">医护人员</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <nz-select [nzAllowClear]="true" name="yihurenyuan" id="yihurenyuan" disabled
+                             [(ngModel)]="lienPersonnel.yihurenyuan" nzPlaceHolder="请选择医护人员">
+                    <nz-option *ngFor="let option of yihucontentPage.content" [nzLabel]="option.dicName"
+                               [nzValue]="option.id"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">留置人姓名</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input name="lzName" id="lzName" placeholder="请输入留置人姓名"
+                         [(ngModel)]="lienPersonnel.lzName" disabled="true">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">留置人性别</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <nz-select [nzAllowClear]="true" name="lzSex" id="lzSex" [(ngModel)]="lienPersonnel.lzSex"
+                             nzPlaceHolder="请选择留置人性别" disabled="true">
+                    <nz-option [nzLabel]="'男'" [nzValue]="'1'"></nz-option>
+                    <nz-option [nzLabel]="'女'" [nzValue]="'2'"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">出生年月</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <nz-date-picker name="birthDay" id="birthDay" [nzFormat]="'yyyy-MM-dd'" style="width: 100%;"
+                                  [(ngModel)]="lienPersonnel.birthDay" disabled="true"></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">留置人年龄</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input name="lzAge" id="lzAge" placeholder="请输入留置人年龄"
+                         [(ngModel)]="lienPersonnel.lzAge" disabled="true">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">民族</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <nz-select [nzAllowClear]="true" disabled name="lzMinZu" id="lzMinZu"
+                             [(ngModel)]="lienPersonnel.lzMinZu" nzPlaceHolder="请选择民族">
+                    <nz-option *ngFor="let option of dictionarycontentPage.content" [nzLabel]="option.dicName"
+                               [nzValue]="option.id"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">单位</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input name="lzDanWei" id="lzDanWei" placeholder="请输入单位"
+                         [(ngModel)]="lienPersonnel.lzDanWei" disabled="true">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">职务</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input name="lzZhiWu" id="lzZhiWu" placeholder="请输入职务"
+                         [(ngModel)]="lienPersonnel.lzZhiWu" disabled="true">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">职级</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <nz-select [nzAllowClear]="true" name="lzZhiJi" id="lzZhiJi"
+                             [(ngModel)]="lienPersonnel.lzZhiJi"
+                             nzPlaceHolder="请选择职级" disabled="true">
+                    <nz-option [nzLabel]="'局级以上'" [nzValue]="'1'"></nz-option>
+                    <nz-option [nzLabel]="'局级'" [nzValue]="'2'"></nz-option>
+                    <nz-option [nzLabel]="'副局级'" [nzValue]="'3'"></nz-option>
+                    <nz-option [nzLabel]="'处级'" [nzValue]="'4'"></nz-option>
+                    <nz-option [nzLabel]="'副处级'" [nzValue]="'5'"></nz-option>
+                    <nz-option [nzLabel]="'科级'" [nzValue]="'6'"></nz-option>
+                    <nz-option [nzLabel]="'副科级'" [nzValue]="'7'"></nz-option>
+                    <nz-option [nzLabel]="'科级以下'" [nzValue]="'8'"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">专案名称</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input name="zhuanAnName" id="zhuanAnName" placeholder="请输入专案名称"
+                         [(ngModel)]="lienPersonnel.zhuanAnName" disabled="true">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">专案联系人</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input name="linkman" id="linkman" placeholder="请输入联系人"
+                         [(ngModel)]="lienPersonnel.linkman" disabled="true">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">留置期限</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <nz-select [nzAllowClear]="true" name="lzQiXian" id="lzQiXian"
+                             [(ngModel)]="lienPersonnel.lzQiXian"
+                             nzPlaceHolder="请选择留置期限" disabled="true">
+                    <nz-option [nzLabel]="'3个月'" [nzValue]="'1'"></nz-option>
+                    <nz-option [nzLabel]="'6个月'" [nzValue]="'2'"></nz-option>
+                    <nz-option [nzLabel]="'1年'" [nzValue]="'3'"></nz-option>
+                    <nz-option [nzLabel]="'3年'" [nzValue]="'4'"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">专案联系人电话</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input name="telNum" id="telNum" placeholder="请输入联系人电话"
+                         [(ngModel)]="lienPersonnel.telNum" disabled="true">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">相关文件</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <nz-upload
+                    [nzFileList]="attachmentFiles"
+                    >
+                  </nz-upload>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </nz-collapse-panel>
+      </nz-collapse>
+      <br>
+    </form>
+  </nz-tab>
+  <nz-tab nzTitle="进驻体检">
+    <form nz-form>
+      <nz-collapse [nzBordered]="false">
+        <nz-collapse-panel [nzHeader]="''" [ngStyle]="{'color':'#f7f7f7'}" [nzActive]="true" [nzDisabled]='true'
+                           [nzShowArrow]='false'>
+          <div nz-row nzType="flex">
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="lzSex">性别</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <nz-select name="lzSex" [(ngModel)]="health.lzSex" style="width: 100%;"
+                             nzPlaceHolder="请选择留置人性别" disabled="disabled">
+                    <nz-option [nzValue]="'1'" [nzLabel]="'男'"></nz-option>
+                    <nz-option [nzValue]="'2'" [nzLabel]="'女'"></nz-option>
+                    <nz-option [nzValue]="'3'" [nzLabel]="'未知'"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="lzAge">年龄</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input name="lzAge" placeholder="请输入留置人年龄"
+                         [(ngModel)]="health.lzAge" disabled="true">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkHealth">体格检查及心电图</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+              <textarea nz-input name="checkHealth" id="checkHealth" [(ngModel)]="health.checkHealth" disabled="true">
+              </textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="historyMedical">既往病史</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+              <textarea nz-input name="historyMedical" id="historyMedical"
+                        [(ngModel)]="health.historyMedical"
+                        nzPlaceHolder="请输入既往病史" disabled="true">
+              </textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="tiWen">体温</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input name="tiWen" id="tiWen" style="width: 100%;" placeholder="请输入体温"
+                         [(ngModel)]="health.tiWen" disabled="true">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="gaoXueYa">血压</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input name="gaoXueYa" id="gaoXueYa" style="width: 50%;"
+                         [(ngModel)]="health.gaoXueYa" disabled="true">
+                  <input nz-input name="xueYa" id="xueYa" style="width: 50%;"
+                         [(ngModel)]="health.xueYa" disabled="true">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="xinLv">心率</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input name="xinLv" id="xinLv" placeholder="请输入心率"
+                         [(ngModel)]="health.xinLv" disabled="true">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="xueTang">随机血糖</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input name="xueTang" id="xueTang" placeholder="请输入血糖"
+                         [(ngModel)]="health.xueTang" disabled="true">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="doctorYiJian">医生意见</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+              <textarea nz-input name="doctorYiJian" id="doctorYiJian" placeholder="请输入医生意见"
+                        [(ngModel)]="health.doctorYiJian" disabled="true">
+              </textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="doctor">医生</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input name="doctor" id="doctor" placeholder="请输入医生"
+                         [(ngModel)]="health.doctor" disabled="true">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="tiJianTime">时间</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <nz-date-picker name="tiJianTime" id="tiJianTime" [nzFormat]="'yyyy-MM-dd'" style="width: 100%;"
+                                  [(ngModel)]="health.tiJianTime" disabled="true"></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="fuZeRen">专案组负责人</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input name="fuZeRen" id="fuZeRen" placeholder="请输入专案组负责人"
+                         [(ngModel)]="health.fuZeRen" disabled="true">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="fuZeRenTel">联系方式</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input name="fuZeRenTel" id="fuZeRenTel" placeholder="请输入联系方式"
+                         [(ngModel)]="health.fuZeRen" disabled="true">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </nz-collapse-panel>
+      </nz-collapse>
+      <br>
+    </form>
+
+  </nz-tab>
+  <nz-tab nzTitle="看护情况">
+    <app-looksik-list></app-looksik-list>
+  </nz-tab>
+  <nz-tab nzTitle="常规体检情况">
+    <app-rule-list></app-rule-list>
+  </nz-tab>
+  <nz-tab nzTitle="饮食情况">
+    <app-yinshi-list></app-yinshi-list>
+  </nz-tab>
+  <nz-tab nzTitle="保障申请">
+    <app-baozhang-list></app-baozhang-list>
+  </nz-tab>
+  <nz-tab nzTitle="谈话申请">
+    <app-tanhua-list></app-tanhua-list>
+  </nz-tab>
+  <nz-tab nzTitle="改进情况反馈">
+    <app-fankui-list></app-fankui-list>
+  </nz-tab>
+</nz-tabset>

@@ -1,0 +1,118 @@
+<page-header [breadcrumb]="breadcrumb">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item><a [routerLink]="['/handlingperson']">办案人员权限管理</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>{{title}}</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+  <div class="breadcrumb">
+    <div class="ml-auto">
+      <h2>{{title}}</h2>
+    </div>
+  </div>
+</page-header>
+<!--<nz-breadcrumb>-->
+  <!--<nz-breadcrumb-item>-->
+    <!--<a [routerLink]="['/']">首页</a>-->
+  <!--</nz-breadcrumb-item>-->
+  <!--<nz-breadcrumb-item>-->
+    <!--<a [routerLink]="['/handlingperson']">办案人员查询</a>-->
+
+  <!--</nz-breadcrumb-item>-->
+<!--</nz-breadcrumb>-->
+
+<!--<div class="breadcrumb">-->
+  <!--<div class="ml-auto"  >-->
+    <!--<h2 style="margin-top: 10px;color:#fa8c16;">{{title}}</h2>-->
+  <!--</div>-->
+<!--</div>-->
+
+<form nz-form [formGroup]="validateForm">
+  <nz-collapse [nzBordered]="false" >
+    <nz-collapse-panel  [nzHeader]="''" [ngStyle]="{'color':'#f7f7f7'}" [nzActive]="true" [nzDisabled]='true' [nzShowArrow]='false'>
+  <div nz-row nzType="flex" >
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired  nzFor="controlNo">编号</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="controlNo" id="controlNo" placeholder="请输入办案人员编号" [(ngModel)]="handlingPerson.controlNo" >
+          <nz-form-explain *ngIf="validateForm.get('controlNo').dirty && validateForm.get('controlNo').errors">请输入办案人员编号!</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired  nzFor="title">姓名</nz-form-label>
+        <nz-form-control  [nzSm]="14" [nzXs]="24" >
+          <input nz-input formControlName="title" id="title" placeholder="请输入办案人员姓名" [(ngModel)]="handlingPerson.title" >
+          <nz-form-explain *ngIf="validateForm.get('title').dirty && validateForm.get('title').errors">请输入办案人员姓名!</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <!--<nz-form-item>-->
+        <!--<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired  nzFor="age">年龄</nz-form-label>-->
+        <!--<nz-form-control  [nzSm]="14" [nzXs]="24" >-->
+          <!--<input nz-input type="number" formControlName="age" id="age" placeholder="请输入年龄" [(ngModel)]="handlingPerson.age" >-->
+          <!--<nz-form-explain *ngIf="validateForm.get('age').dirty && validateForm.get('age').errors">请输入年龄!</nz-form-explain>-->
+        <!--</nz-form-control>-->
+      <!--</nz-form-item>-->
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24"  >上传头像</nz-form-label>
+        <nz-form-control>
+          <div class="clearfix">
+            <nz-upload
+              nzListType="picture-card"
+              (nzChange)="handleChange($event)"
+              [(nzFileList)]="previewImages"
+              [nzCustomRequest]="customReq"
+              [nzShowButton]="previewImages.length < 1"
+              [nzPreview]="handlePreview">
+              <i nz-icon type="plus"></i>
+              <div class="ant-upload-text">点击上传</div>
+            </nz-upload>
+            <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
+              <ng-template #modalContent>
+                <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
+              </ng-template>
+            </nz-modal>
+          </div>
+          <!--<nz-form-explain *ngIf="validateForm.get('img').dirty && validateForm.get('img').errors">请上传头像!</nz-form-explain>-->
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="applyTime">登记日期</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-date-picker formControlName="applyTime" id="applyTime" [nzFormat]="'yyyy-MM-dd'" [(ngModel)]="handlingPerson.applyTime" ></nz-date-picker>
+          <nz-form-explain *ngIf="validateForm.get('applyTime').dirty && validateForm.get('applyTime').errors">请选择备案日期!</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="memberSex">性别</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select  [nzAllowClear]="true"  formControlName="memberSex" id="memberSex" [(ngModel)]="handlingPerson.memberSex" nzPlaceHolder="请选择">
+            <nz-option [nzLabel]="'男'" [nzValue]="0"></nz-option>
+            <nz-option [nzLabel]="'女'" [nzValue]="1"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="validateForm.get('memberSex').dirty && validateForm.get('memberSex').errors">请选择性别!</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+    </div>
+
+  </div>
+      <br>
+      <div nz-row nzType="flex" nzJustify="center">
+        <nz-form-item nz-row style="margin-bottom:8px;">
+          <nz-form-control >
+            <button nz-button  [nzSize]="'large'" nzType="primary" (click)="closed()">关闭</button>
+            <button nz-button  [nzSize]="'large'" nzType="primary" (click)="saveHandlingPerson()">保存</button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </nz-collapse-panel>
+  </nz-collapse>
+</form>

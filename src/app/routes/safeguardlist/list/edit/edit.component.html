@@ -1,0 +1,139 @@
+<page-header [breadcrumb]="breadcrumb">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item><a [routerLink]="['/safeguardlist']">保障申请列表</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>{{title1}}</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+  <div class="breadcrumb">
+    <div class="ml-auto">
+      <h2>{{title1}}</h2>
+    </div>
+  </div>
+</page-header>
+<!--<nz-breadcrumb>-->
+  <!--<nz-breadcrumb-item>-->
+    <!--<a [routerLink]="['/']">首页</a>-->
+  <!--</nz-breadcrumb-item>-->
+  <!--<nz-breadcrumb-item>-->
+    <!--<a [routerLink]="['/safeguardlist']">查看保障申请列表</a>-->
+
+  <!--</nz-breadcrumb-item>-->
+<!--</nz-breadcrumb>-->
+
+<!--<div class="breadcrumb">-->
+  <!--<div class="ml-auto">-->
+    <!--<h2 style="margin-top: 10px;color:#fa8c16;">{{title1}}</h2>-->
+  <!--</div>-->
+<!--</div>-->
+
+<form nz-form [formGroup]="validateForm">
+  <nz-collapse [nzBordered]="false">
+    <nz-collapse-panel [nzHeader]="''" [ngStyle]="{'color':'#f7f7f7'}" [nzActive]="true" [nzDisabled]='true'
+                       [nzShowArrow]='false'>
+      <div nz-row nzType="flex">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="bumen">填报部门</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+
+              <!--<nz-select  [nzAllowClear]="true" nzDisabled name="bumen" id="bumen" [(ngModel)]="baozhangshenqing.bumen" >-->
+                <!--<nz-option *ngFor="let option of dictionarycontentPage.content" [nzLabel]="option.dicName" [nzValue]="option.id"></nz-option>-->
+              <!--</nz-select>-->
+              <div *ngFor="let o of dictionarycontentPage.content">
+                <p *ngIf="o.id===baozhangshenqing.bumen">{{o.dicName}}</p>
+              </div>
+              <!--{{baozhangshenqing.bumen}}-->
+              <!--<input nz-input formControlName="bumen" id="bumen"-->
+                     <!--[(ngModel)]="baozhangshenqing.bumen"-->
+                     <!--nzPlaceHolder="填报部门">-->
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="tianBaoTime">填报日期</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              {{baozhangshenqing.tianBaoTime}}
+              <!--<nz-date-picker  [nzFormat]="'yyyy-MM-dd'" nz-input formControlName="tianBaoTime" id="tianBaoTime" placeholder="请输入专案名称"-->
+                               <!--[(ngModel)]="baozhangshenqing.tianBaoTime">-->
+              <!--</nz-date-picker>-->
+              <!--<nz-form-explain *ngIf="validateForm.get('tianBaoTime').dirty && validateForm.get('tianBaoTime').errors">-->
+                <!--此项为必填!-->
+              <!--</nz-form-explain>-->
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="lpId">被调查人代号</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <div *ngFor="let o of lienPersonnelcontentPage.content">
+                <p *ngIf="o.id===baozhangshenqing.lpId">{{o.daiHao}}</p>
+              </div>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="chengbanbumen">案件承办部门</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              {{baozhangshenqing.chengbanbumen}}
+              <!--<input nz-input formControlName="chengbanbumen" id="chengbanbumen" disabled placeholder="请输入留置人员房间号"-->
+                     <!--[(ngModel)]="baozhangshenqing.chengbanbumen">-->
+              <!--<nz-form-explain *ngIf="validateForm.get('chengbanbumen').dirty && validateForm.get('chengbanbumen').errors">-->
+                <!--此项为必填!-->
+              <!--</nz-form-explain>-->
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="matter">申请事项及具体需求</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <textarea nz-input  formControlName="matter" id="matter" [(ngModel)]="baozhangshenqing.matter" disabled
+                        nzPlaceHolder="请输入申请事项及具体需求">
+              </textarea>
+              <!--<nz-form-explain *ngIf="validateForm.get('matter').dirty && validateForm.get('matter').errors">-->
+                <!--此项为必填!-->
+              <!--</nz-form-explain>-->
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="apply">呈批情况</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <textarea nz-input  formControlName="apply" id="apply" disabled
+                        [(ngModel)]="baozhangshenqing.apply"
+                        nzPlaceHolder="请输入呈批情况">
+              </textarea>
+              <nz-form-explain *ngIf="validateForm.get('apply').dirty && validateForm.get('apply').errors">
+                此项为必填!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="remark">备注</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <textarea nz-input="" formControlName="remark" id="remark" style="width: 100%;" disabled
+                        [(ngModel)]="baozhangshenqing.remark">
+              </textarea>
+              <!--<nz-form-explain *ngIf="validateForm.get('remark').dirty && validateForm.get('remark').errors">-->
+                <!--此项为必填!-->
+              <!--</nz-form-explain>-->
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-collapse-panel>
+  </nz-collapse>
+  <br>
+
+  <!--<div nz-row nzType="flex" nzJustify="center">-->
+    <!--<nz-form-item nz-row style="margin-bottom:8px;">-->
+      <!--<nz-form-control>-->
+        <!--<button nz-button nzType="primary" nzSize="large" (click)="submitForm()" [nzLoading]="isLoading">保存</button>-->
+      <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+  <!--</div>-->
+</form>
+

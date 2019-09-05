@@ -1,0 +1,60 @@
+<page-header [breadcrumb]="breadcrumb"  [action]="action">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item> <a [routerLink]="['/']">系统管理</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>用户管理</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+  <ng-template #action>
+    <button (click)="editUser()" nz-button nzType="primary"> <i class="anticon anticon-plus-circle"></i>新增用户</button>
+  </ng-template>
+</page-header>
+<nz-card>
+<nz-table #basicTable
+          nzShowSizeChanger
+          [nzData]="contentPage.content"
+          [nzTotal]="contentPage.totalElements"
+          [nzLoading]="basicTableLoading"
+          [nzLoadingDelay]="1"
+          [(nzPageIndex)]="queryParam.page.currentPage"
+          [(nzPageSize)]="queryParam.page.sizePerPage"
+          [nzFrontPagination]="false"
+          (nzPageIndexChange)="queryContents()"
+          (nzPageSizeChange)="queryContents(true)">
+  <thead>
+  <tr>
+    <th>序号</th>
+    <th>姓名</th>
+    <th>用户名</th>
+    <th>联系方式</th>
+    <!--<th>所属居委会</th>-->
+    <th>状态</th>
+    <th>操作区</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of basicTable.data,let i = index;">
+    <td>{{(queryParam.page.currentPage-1)*queryParam.page.sizePerPage+i+1}}</td>
+    <td>{{data.title}}</td>
+    <td>{{data.username}}</td>
+    <td>{{data.telphone}}</td>
+    <!--<td>-->
+      <!--{{data.dangzuzhi?.title}}-->
+      <!--<span *ngIf="data.dangzuzhi!=null && data.dangzuzhipassed" style="color: #00b3ee">(待审核)</span>-->
+    <!--</td>-->
+    <!--<td>{{data.juweihui?.title}}</td>-->
+    <td >
+      <nz-switch (ngModelChange)="changeStatus(data)" [nzLoading]="data.statusChanging" [(ngModel)]="data.enabled" nzCheckedChildren="启" nzUnCheckedChildren="禁"></nz-switch>
+    </td>
+    <td>
+      <button nz-button nzType="primary" (click)="editUser(data)" [nzSize]="'small'">编辑</button>
+      <nz-divider nzType="vertical"></nz-divider>
+      <button  nz-button nzType="danger" (click)="deleteUser(data)" [nzSize]="'small'">删除</button>
+      <nz-divider nzType="vertical"></nz-divider>
+      <button  nz-button nzType="danger" (click)="resetPassword(data)" [nzSize]="'small'">重置密码</button>
+    </td>
+
+  </tr>
+  </tbody>
+</nz-table>
+</nz-card>

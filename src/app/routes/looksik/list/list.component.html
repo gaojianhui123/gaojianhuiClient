@@ -1,0 +1,7 @@
+<page-header>
+</page-header>
+<nz-card>
+  <sf mode="search" [schema]="searchSchema" (formSubmit)="load($event)"
+  (formReset)="reset($event)"></sf>
+  <st #st [data]="url" [columns]="columns" [req]="{body: queryParam}" [res]="{process:processData}"></st>
+</nz-card>

@@ -1,0 +1,52 @@
+<page-header [breadcrumb]="breadcrumb"  [action]="action">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item> <a [routerLink]="['/']">系统管理</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>角色管理</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+  <ng-template #action>
+    <button (click)="showModal()" nz-button nzType="primary"> <i class="anticon anticon-plus-circle"></i>新增角色</button>
+  </ng-template>
+</page-header>
+<nz-card>
+<nz-table #basicTable
+          nzShowSizeChanger
+          [nzData]="rolecontentPage.content"
+          [nzTotal]="rolecontentPage.totalElements"
+          [nzLoading]="basicTableLoading"
+          [nzLoadingDelay]="1"
+          [(nzPageIndex)]="rolequeryParam.page.currentPage"
+          [(nzPageSize)]="rolequeryParam.page.sizePerPage"
+          [nzFrontPagination]="false"
+          (nzPageIndexChange)="queryContents()"
+          (nzPageSizeChange)="queryContents(true)">
+  <thead>
+  <tr style="font-weight: 900!important;">
+    <th>序号</th>
+    <th>角色名称</th>
+    <th>角色类型</th>
+    <!--<th>权限</th>-->
+    <th>操作区</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of basicTable.data,let i = index;">
+    <td>{{(rolequeryParam.page.currentPage-1)*rolequeryParam.page.sizePerPage+i+1}}</td>
+    <td >{{data?.title}}</td>
+    <!--<td >{{data?.roletype}}</td>-->
+    <td [ngSwitch]="data.roletype">
+      <span *ngSwitchCase="0">平台角色</span>
+      <span *ngSwitchCase="1">租户角色</span>
+    </td>
+
+    <!--<td>{{data?.protectedResource}}</td>-->
+    <td>
+        <button nz-button nzType="primary" (click)="EditRole(data)" [nzSize]="'small'">编辑</button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button  nz-button nzType="danger" (click)="deletedRole(data)" [nzSize]="'small'">删除</button>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+</nz-card>

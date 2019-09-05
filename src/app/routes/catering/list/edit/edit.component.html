@@ -1,0 +1,204 @@
+<br>
+<nz-breadcrumb>
+  <nz-breadcrumb-item>
+    <a [routerLink]="['/catering']">送餐登记</a>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    <a>餐饮录入</a>
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<div class="breadcrumb">
+  <div class="ml-auto"  >
+    <h2 style="margin-top: 15px;">{{title1}}</h2>
+  </div>
+</div>
+
+<form nz-form [formGroup]="validateForm">
+  <nz-collapse [nzBordered]="false" >
+    <nz-collapse-panel  [nzHeader]="''" [ngStyle]="{'color':'#f7f7f7'}" [nzActive]="true" [nzDisabled]='true' [nzShowArrow]='false'>
+
+      <div nz-row nzSpan="24">
+        <nz-form-item>
+          <nz-form-label [nzSm]="4" [nzXs]="4" nzFor="cookingMan" style="font-weight: 700">菜单类型</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-select  [nzAllowClear]="true"  formControlName="cateringMenu" id="cateringMenu" [(ngModel)]="catering.cateringMenu"   nzPlaceHolder="请选择政治面貌" >
+              <nz-option  [nzLabel]="'常规菜单'" [nzValue]="'0'"></nz-option>
+              <nz-option  [nzLabel]="'特殊菜单'" [nzValue]="'1'"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <nz-collapse [nzBordered]="false" >
+        <nz-collapse-panel  [nzHeader]="'基本信息'" [nzActive]="true">
+          <div nz-row nzType="flex" >
+
+            <div nz-col nzSpan="12">
+
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="cookingMan">做餐人</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input formControlName="cookingMan"  style="width: 30%" id="cookingMan" placeholder="请输入姓名"  [(ngModel)]="catering.cookingMan">
+                  <input nz-input formControlName="cookingManTwo" style="width: 30%;margin-left: 5px" placeholder="请输入姓名" [(ngModel)]="catering.cookingManTwo">
+                  <input nz-input formControlName="cookingManThree"  style="width: 30%;margin-left: 5px"  placeholder="请输入姓名"  [(ngModel)]="catering.cookingManThree">
+                  <!--<nz-form-explain *ngIf="validateForm.get('cookingMan').dirty && validateForm.get('cookingMan').errors">请输入做餐人!</nz-form-explain>-->
+                </nz-form-control>
+              </nz-form-item>
+
+
+
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="deliveryMan">送餐人</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input formControlName="deliveryMan" style="width: 30%" id="deliveryMan" placeholder="请输入内容"  [(ngModel)]="catering.deliveryMan">
+                  <input nz-input formControlName="deliveryManTwo" style="width: 30%;margin-left: 5px" placeholder="请输入姓名" [(ngModel)]="catering.deliveryManTwo">
+                  <input nz-input formControlName="deliveryManThree"  style="width: 30%;margin-left: 5px"  placeholder="请输入姓名"  [(ngModel)]="catering.deliveryManThree">
+
+                  <!--<nz-form-explain *ngIf="validateForm.get('birthday').dirty && validateForm.get('birthday').errors">请输入出处!</nz-form-explain>-->
+                </nz-form-control>
+              </nz-form-item>
+
+
+
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="riqi">录入日期</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <nz-date-picker formControlName="riqi" id="riqi" [nzFormat]="'yyyy-MM-dd'" [(ngModel)]="catering.riqi" ></nz-date-picker>
+
+                  <!--<nz-form-explain *ngIf="validateForm.get('birthday').dirty && validateForm.get('birthday').errors">请输入出处!</nz-form-explain>-->
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+
+
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="packingMan">打包人</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input formControlName="packingMan" style="width: 30%" id="packingMan" placeholder="请输入内容" [(ngModel)]="catering.packingMan" >
+                  <input nz-input formControlName="packingManTwo" style="width: 30%;margin-left: 5px" placeholder="请输入姓名" [(ngModel)]="catering.packingManTwo">
+                  <input nz-input formControlName="packingManThree"  style="width: 30%;margin-left: 5px"  placeholder="请输入姓名"  [(ngModel)]="catering.packingManThree">
+
+                  <!--<nz-form-explain *ngIf="validateForm.get('sex').dirty && validateForm.get('sex').errors">请输入性别!</nz-form-explain>-->
+                </nz-form-control>
+              </nz-form-item>
+
+
+
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="receiveMan">接餐人</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input formControlName="receiveMan" style="width: 30%" id="receiveMan" placeholder="请输入内容" [(ngModel)]="catering.receiveMan" >
+                  <input nz-input formControlName="receiveManTwo" style="width: 30%;margin-left: 5px" placeholder="请输入姓名" [(ngModel)]="catering.receiveManTwo">
+                  <input nz-input formControlName="receiveManThree"  style="width: 30%;margin-left: 5px"  placeholder="请输入姓名"  [(ngModel)]="catering.receiveManThree">
+
+                  <!--<nz-form-explain *ngIf="validateForm.get('birthday').dirty && validateForm.get('birthday').errors">请输入出处!</nz-form-explain>-->
+                </nz-form-control>
+              </nz-form-item>
+
+
+
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="remarks">备注</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <input nz-input formControlName="remarks" id="remarks" placeholder="请输入内容"  [(ngModel)]="catering.remarks">
+                  <!--<nz-form-explain *ngIf="validateForm.get('title').dirty && validateForm.get('title').errors">请输入姓名!</nz-form-explain>-->
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </nz-collapse-panel>
+      </nz-collapse>
+
+      <nz-collapse [nzBordered]="false"  *ngIf="catering.cateringMenu === '0'">
+        <nz-collapse-panel  [nzHeader]="'常规菜单'" [nzActive]="true">
+          <div nz-row  nzSpan="24">
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label [nzSm]="4" [nzXs]="6" nzFor="breakfast">早餐</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <textarea nz-input formControlName="breakfast" id="breakfast"  placeholder="请输入内容"
+                            [nzAutosize]="{ minRows: 5, maxRows: 16 }" [(ngModel)]="catering.breakfast"></textarea>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label [nzSm]="4" [nzXs]="6" nzFor="lunch">中餐</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <textarea nz-input formControlName="lunch" id="lunch"  placeholder="请输入内容"
+                            [nzAutosize]="{ minRows: 5, maxRows: 16 }" [(ngModel)]="catering.lunch"></textarea>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label [nzSm]="4" [nzXs]="6" nzFor="dinner">晚餐</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <textarea nz-input formControlName="dinner" id="dinner"  placeholder="请输入内容"
+                            [nzAutosize]="{ minRows: 5, maxRows: 16 }" [(ngModel)]="catering.dinner"></textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </nz-collapse-panel>
+      </nz-collapse>
+
+      <nz-collapse [nzBordered]="false" *ngIf="catering.cateringMenu === '1'">
+        <nz-collapse-panel  [nzHeader]="'特殊菜单'" [nzActive]="true">
+          <div nz-row  nzSpan="24">
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label [nzSm]="4" [nzXs]="6" nzFor="lienPersonnelid">代号</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <nz-select  [nzAllowClear]="true"  formControlName="lienPersonnelid" id="lienPersonnelid" [(ngModel)]="catering.lienPersonnelid"   nzPlaceHolder="请选择代号" >
+                    <nz-option *ngFor="let l of lienPersonnelcontentPage.content" [nzLabel]="l.daiHao" [nzValue]="l.id"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-label [nzSm]="4" [nzXs]="6" nzFor="specificbreakfast">早餐</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <textarea nz-input formControlName="specificbreakfast" id="specificbreakfast"  placeholder="请输入内容"
+                            [nzAutosize]="{ minRows: 5, maxRows: 16 }" [(ngModel)]="catering.specificbreakfast"></textarea>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label [nzSm]="4" [nzXs]="6" nzFor="specificlunch">中餐</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <textarea nz-input formControlName="specificlunch" id="specificlunch"  placeholder="请输入内容"
+                            [nzAutosize]="{ minRows: 5, maxRows: 16 }" [(ngModel)]="catering.specificlunch"></textarea>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label [nzSm]="4" [nzXs]="6" nzFor="specificdinner">晚餐</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <textarea nz-input formControlName="specificdinner" id="specificdinner"  placeholder="请输入内容"
+                            [nzAutosize]="{ minRows: 5, maxRows: 16 }" [(ngModel)]="catering.specificdinner"></textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </nz-collapse-panel>
+      </nz-collapse>
+
+    </nz-collapse-panel>
+  </nz-collapse>
+
+  <br>
+
+  <div nz-row nzType="flex" nzJustify="center">
+    <nz-form-item nz-row style="margin-bottom:8px;">
+      <nz-form-control >
+        <button nz-button  [nzSize]="'large'" nzType="primary" (click)="closed()">关闭</button>
+        <button nz-button nzType="primary" nzSize="large" (click)="submitForms()" [nzLoading]="isLoading" >保存</button>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+
+</form>
+
+

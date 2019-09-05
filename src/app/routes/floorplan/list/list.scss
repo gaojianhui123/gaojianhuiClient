@@ -1,0 +1,354 @@
+*{
+  font-weight: bold;
+}
+ul li{
+  list-style: none;
+}
+.floorplan,.floor_two{
+  width: 100%;
+  height: 500px;
+  border:1px solid #000;
+  display: flex;
+}
+.left{
+  width: 200px;
+  border-right:1px solid #000;
+  .equipment{
+    width: 100%;
+    height: 126px;
+    display: flex;
+    flex-direction: row;
+    .spare_time{
+      width: 120px;
+      height: 126px;
+      border:1px solid #000;
+      border-left:none;
+      border-top:none;
+      text-align: center;
+      line-height: 120px;
+    }
+    .equipment_left{
+      width: 80px;
+      height: 64px;
+      border-bottom: 1px solid #000;
+      text-align: center;
+      line-height: 64px;
+    }
+  }
+  .left_white{
+    width: 100%;
+    height: 48px;
+    div{
+      width: 60px;
+      height: 100%;
+      border-right:1px solid #000;
+      border-bottom: 1px solid #000;
+    }
+  }
+  .security{
+    width: 110%;
+    height: 100px;
+    z-index: 99;
+    background: #fff;
+  }
+  .left_elevator{
+    width: 100%;
+    height: 112px;
+    .levator-left{
+      width: 60px;
+      height: 50px;
+      line-height: 50px;
+      border-top:0.5px solid #000;
+    }
+    .stairs_left{
+      width: 100%;
+      height: 63px;
+      line-height: 63px;
+      .Stairleft{
+        width: 120px;
+        border-top:0.5px solid #000;
+        border-right:0.5px solid #000;
+      }
+    }
+  }
+  .foot{
+    width: 100%;
+    //height: 110px;
+    height: calc(100% - 386px);
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    line-height: 110px;
+    .physical{
+      width:40%;
+      border-top: 0.5px solid #000;
+      border-right:0.5px solid #000;
+    }
+    .medical{
+      width:60%;
+      border-top: 0.5px solid #000;
+    }
+  }
+}
+.room{
+  flex:1;
+  float: left;
+  display: flex;
+  flex-direction:column;
+  .top,.bottom{
+    width: 100%;
+    height: 90px;
+    display: flex;
+    p{
+      width:100%;
+      display: flex;
+      height:100%;
+      float: left;
+      span{
+        flex:1;
+        text-align: center;
+        border-right: 1px solid #000;
+        line-height: 60px;
+      }
+    }
+  }
+  .top{
+    border-bottom:1px solid #000;
+    p .last{
+      border-right:none;
+    }
+  }
+  .bottom{
+    border-top:1px solid #000;
+    p .last_B{
+      border-right:none;
+    }
+  }
+  .middle{
+    width: 100%;
+    height:100%;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    .elevator, .stairs{
+      width: 130px;
+      height: 200px;
+      margin-top: -40px;
+      border-top:1px solid #000;
+      border-bottom: 1px solid #000;
+    }
+    .elevator{
+      width: 60px;
+      display: flex;
+      flex-direction: column;
+      .stair-top, .stair-bottom{
+        width: 100%;
+        height:50px;
+        border-top:1px solid #000;
+        border-bottom:1px solid #000;
+      }
+      .stair-middle{
+        text-align: center;
+        line-height: 100px;
+        width: 100%;
+        height: 100px;
+      }
+      .stair-bottom{
+        border-bottom:none;
+        text-align: center;
+        line-height: 50px;
+      }
+      .stair-top{
+        border-top:none;
+        border-right:1px solid #000;
+      }
+    }
+    .white{
+      width: 400px;
+      height: 200px;
+      border:1px solid #000;
+    }
+    .stairs{
+      border-left: 1px solid #000;
+      p{
+        display: flex;
+        list-style: none;
+        flex-direction: column;
+        span {
+          width: 130px;
+          height: 50px;
+          text-align: center;
+          line-height: 50px;
+          border-bottom:1px solid #000;
+        }
+      }
+    }
+  }
+}
+
+.floor_left{
+  width: 200px;
+  height: 100%;
+  p{
+    width: 150px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    span{
+      text-align: center;
+      line-height: 45px;
+      //height: 45px;
+      flex:1;
+      border-bottom:1px solid #000;
+      border-right:1px solid #000;
+    }
+    span:nth-child(7){
+      text-align: left;
+      border-right: none;
+    }
+  }
+}
+.floor_right{
+  flex:1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .floor_top,.floor_bto{
+    width: 100%;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    p{
+      width: 100%;
+      height: 100%;
+      display: flex;
+      span{
+        display: block;
+        text-align: center;
+        flex:1;
+        height: 100%;
+        line-height: 80px;
+        border-left:1px solid #000;
+      }
+    }
+  }
+  .floor_top{
+    border-bottom:1px solid #000;
+  }
+  .floor_bto{
+    border-top:1px solid #000;
+  }
+  .floor_middle{
+    width: 100%;
+    flex:1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    .middle_L,.middle_R{
+      height: 190px;
+    }
+    .middle_L{
+      width: 600px;
+      display: flex;
+      flex-direction: row;
+      .middle_white{
+        width: 445px;
+        height: 100%;
+        border:1px solid #000;
+      }
+      .floor_M_L{
+        width: 150px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        span{
+          //display: block;
+          text-align: center;
+          //flex:1;
+          line-height: 39px;
+          border-left:1px solid #000;
+          border-top:1px solid #000;
+        }
+        .floor_L{
+          display: flex;
+          flex-direction: row;
+          span{
+            display: block;
+            flex:1;
+            border:none;
+          }
+          .F_middle_last{
+            border-bottom:1px solid #000;
+          }
+        }
+      }
+    }
+    .middle_R{
+      width: 150px;
+      p{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        span{
+          //display: block;
+          text-align: center;
+          //flex:1;
+          line-height: 39px;
+          border-left:1px solid #000;
+          border-top:1px solid #000;
+        }
+      }
+    }
+  }
+}
+.roomNumber{
+  width: 20%;
+  height:100%;
+  float: left;
+}
+.roomview {
+  width: 80%;
+  height:100%;
+  display: flex;
+  font-size: 11px;
+  flex-direction: column;
+  line-height: 25px;
+  .top_room, .bottom_room{
+    width: 100%;
+    height: 50%;
+    color:green;
+  }
+}
+.floor_M_L_rooms{
+  height: 45px!important;
+}
+.right_rooms, .floor_M_L_rooms{
+  width: 100%;
+  height:100%;
+  display: flex;
+  font-size: 11px;
+  flex-direction: column;
+  .right_roomNumber{
+    width: 100%;
+    height:50%;
+    line-height: 20px;
+  }
+  .right_roomview{
+    width: 100%;
+    height:50%;
+    color:green;
+    display: flex;
+    font-size: 11px;
+    text-align: center;
+    line-height: 20px;
+    .right_top_room{
+      flex:1;
+    }
+    .right_bottom_room{
+      flex:1;
+    }
+  }
+}
+

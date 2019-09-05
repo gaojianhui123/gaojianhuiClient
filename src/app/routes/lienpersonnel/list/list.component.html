@@ -1,0 +1,28 @@
+<page-header [breadcrumb]="breadcrumb" [action]="action">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item><a>进驻管理</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>进驻登记</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+ <div>
+   <label style="font-size:20px;">被调查人总数:<b style="color: #f5222d">{{personTotal}}</b>人&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（其中：男公安看护:<b style="color: #f5222d">{{menGongAnTypeCount}}</b>人，女公安看护:<b style="color: #f5222d">{{womenGongAnTypeCount}}</b>人，武警看护:<b style="color: #f5222d">{{wujingTypeCount}}</b>人)</label>
+   </div>
+  <ng-template #action>
+    <button (click)="add()" nz-button nzType="primary">新建</button>
+  </ng-template>
+</page-header>
+<nz-card>
+  <div nz-row nzType="flex">
+    <div nz-col nzSpan="18">
+      <sf mode="search" [schema]="searchSchema" (formSubmit)="query.query =$event; st.load(query)"
+          (formReset)="reset($event);"></sf>
+    </div>
+    <div nz-col nzSpan="6">
+      <button nz-button nzType="primary" (click)="reset($event);">全部</button>
+      <button nz-button nzType="primary" (click)="query.query.outStatus = '0';st.load(query)">在点</button>
+      <button nz-button nzType="primary" (click)="query.query.outStatus = '1';st.load(query)">撤离</button>
+    </div>
+  </div><br>
+  <st #st [res]="{process:processData}" [data]="url" [columns]="columns" [req]="{body:query}" [singleSort]="{key:'sortparam'}"></st>
+</nz-card>

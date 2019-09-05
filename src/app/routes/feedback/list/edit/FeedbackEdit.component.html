@@ -1,0 +1,94 @@
+<br>
+<nz-breadcrumb>
+  <nz-breadcrumb-item>
+    <a [routerLink]="['/']">首页</a>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    <a [routerLink]="['/feedback']">问题反馈</a>
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<div class="breadcrumb">
+  <div class="ml-auto"  >
+    <h2 style="margin-top: 10px;">{{title}}</h2>
+  </div>
+</div>
+
+<form nz-form [formGroup]="validateForm">
+  <nz-collapse [nzBordered]="false" >
+    <nz-collapse-panel  [nzHeader]="''" [ngStyle]="{'color':'#f7f7f7'}" [nzActive]="true" [nzDisabled]='true' [nzShowArrow]='false'>
+      <div nz-row nzType="flex" >
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired  nzFor="department">部门</nz-form-label>
+            <nz-form-control [nzSm]="9" [nzXs]="24">
+              <input nz-input formControlName="department" id="department" placeholder="请输入部门" [(ngModel)]="feedback.department" >
+              <nz-form-explain *ngIf="validateForm.get('department').dirty && validateForm.get('department').errors">请输入部门!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="5" [nzXs]="24" nzRequired nzFor="fkTime">反馈日期</nz-form-label>
+            <nz-form-control [nzSm]="10" [nzXs]="24">
+              <nz-date-picker formControlName="fkTime" id="fkTime" [nzFormat]="'yyyy-MM-dd'" [(ngModel)]="feedback.fkTime" ></nz-date-picker>
+              <nz-form-explain *ngIf="validateForm.get('fkTime').dirty && validateForm.get('fkTime').errors">请选择反馈日期!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row nzType="flex" >
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label [nzSm]="4" [nzXs]="6" nzRequired nzFor="problem">存在问题</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <textarea nz-input formControlName="problem" id="problem"  placeholder="请输入存在问题"
+                            [nzAutosize]="{ minRows: 5, maxRows: 16 }" [(ngModel)]="feedback.problem"></textarea>
+              <nz-form-explain *ngIf="validateForm.get('problem').dirty && validateForm.get('problem').errors">请输入存在问题!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="4" [nzXs]="6" nzRequired nzFor="suggest">改进建议</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+                  <textarea nz-input formControlName="suggest" id="suggest"  placeholder="请输入改进建议"
+                            [nzAutosize]="{ minRows: 5, maxRows: 16 }" [(ngModel)]="feedback.suggest"></textarea>
+              <nz-form-explain *ngIf="validateForm.get('suggest').dirty && validateForm.get('suggest').errors">请输入改进建议!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row nzType="flex" >
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="signTime">签收日期</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-date-picker formControlName="signTime" id="signTime" [nzFormat]="'yyyy-MM-dd'" [(ngModel)]="feedback.signTime" ></nz-date-picker>
+              <nz-form-explain *ngIf="validateForm.get('signTime').dirty && validateForm.get('signTime').errors">请选择签收日期!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="3" [nzXs]="24" nzRequired  nzFor="title">签收人</nz-form-label>
+            <nz-form-control  [nzSm]="9" [nzXs]="24" >
+              <input nz-input formControlName="title" id="title" placeholder="请输入签收人员姓名" [(ngModel)]="feedback.title" >
+              <nz-form-explain *ngIf="validateForm.get('title').dirty && validateForm.get('title').errors">请输入签收人员姓名!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <br>
+      <div nz-row nzType="flex" nzJustify="center">
+        <nz-form-item nz-row style="margin-bottom:8px;">
+          <nz-form-control >
+            <button nz-button  [nzSize]="'large'" nzType="primary" (click)="closed()">关闭</button>
+            <button nz-button  [nzSize]="'large'" nzType="primary" (click)="save()">保存</button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </nz-collapse-panel>
+  </nz-collapse>
+</form>

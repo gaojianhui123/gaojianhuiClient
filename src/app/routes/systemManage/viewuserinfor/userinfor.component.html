@@ -1,0 +1,93 @@
+<page-header [breadcrumb]="breadcrumb"  >
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item> <a [routerLink]="['/']">首页</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="currentUser.isadmin == false || currentUser.isadmin == null"><a [routerLink]="['/usermanage']">用户列表</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>用户管理</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+</page-header>
+<nz-card>
+  <form nz-form>
+    <div nz-row nzType="flex" >
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="username">用户名</nz-form-label>
+          <nz-form-control [nzSpan]="14">
+            <input nz-input disabled name="username"  [(ngModel)]="user.username" type="input" id="username">
+          </nz-form-control>
+        </nz-form-item >
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="title">姓名</nz-form-label>
+          <nz-form-control [nzSpan]="14">
+            <input nz-input disabled name="title" [(ngModel)]="user.title"  type="input" id="title">
+          </nz-form-control>
+        </nz-form-item >
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="bumenId">部门</nz-form-label>
+          <nz-form-control [nzSpan]="14">
+            <!--<input nz-input name="title" [(ngModel)]="user.title"  type="input1" id="title1">-->
+            <nz-select nzDisabled="true" [nzAllowClear]="true"  name="bumenId" id="bumenId" [(ngModel)]="user.bumenId" nzPlaceHolder="请选择" >
+              <nz-option *ngFor="let option of dictionarycontentPage.content" [nzLabel]="option.dicName" [nzValue]="option.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item >
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="telphone">联系电话</nz-form-label>
+          <nz-form-control [nzSpan]="14">
+            <input nz-input disabled name="telphone" [(ngModel)]="user.telphone"  type="input" id="telphone">
+          </nz-form-control>
+        </nz-form-item >
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="2">照片</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+
+            <div class="clearfix">
+              <nz-upload
+                nzListType="picture-card"
+                (nzChange)="handleChange($event)"
+                [(nzFileList)]="previewImages"
+                [nzCustomRequest]="customReq"
+                [nzShowUploadList]="{showRemoveIcon:false,showPreviewIcon:true}"
+                [nzRemove]="false"
+                [nzShowButton]="false"
+                [nzPreview]="handlePreview">
+                <!--<i class="anticon anticon-plus"></i>-->
+                <!--<div class="ant-upload-text">上传照片</div>-->
+              </nz-upload>
+              <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
+                <ng-template #modalContent>
+                  <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
+                </ng-template>
+              </nz-modal>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row nzType="flex">
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="3" nzFor="roles">角色</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-select  name="roles" [nzDisabled]="true"  [nzAllowClear]="'true'" [(ngModel)]="user.roles"  nzMode="tags"  [compareWith]="compareFn" nzPlaceHolder="请选择角色">
+              <nz-option *ngFor="let option of rolecontentPage.content" [nzLabel]="option.title" [nzValue]="option"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <!--<nz-form-item nz-row style="margin-bottom:8px;">-->
+      <!--<nz-form-control [nzSpan]="14" [nzOffset]="10">-->
+        <!--<button nz-button nzType="primary" [nzLoading]="isConfirmLoading" (click)="saveUser()">-->
+          <!--<span *ngIf="isConfirmLoading">...</span>-->
+          <!--<span *ngIf="!isConfirmLoading">保存</span>-->
+        <!--</button>-->
+      <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+  </form>
+</nz-card>

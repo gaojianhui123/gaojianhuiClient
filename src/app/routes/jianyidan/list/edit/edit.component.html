@@ -1,0 +1,10 @@
+<div class="modal-header">
+  <div class="modal-title">查看问题反馈</div>
+</div>
+<nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
+<sf *ngIf="i"  mode="edit" [schema]="schema" [ui]="ui" [formData]="i" button="none">
+  <div class="modal-footer">
+    <button nz-button type="button" (click)="close()">关闭</button>
+    <button nz-button type="button" nzType="primary" (click)="gaijin(i)">改进情况反馈</button>
+  </div>
+</sf>

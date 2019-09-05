@@ -1,0 +1,16 @@
+<page-header [title]="'单号：234231029431'" [breadcrumb]="breadcrumb"  [action]="action">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item><a>一级菜单</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>二级菜单</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>三级菜单</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+  <ng-template #action>
+    <button (click)="add()" nz-button nzType="primary">新建</button>
+  </ng-template>
+</page-header>
+<nz-card>
+  <sf mode="search" [schema]="searchSchema" (formSubmit)="query.query =$event;st.load(1)" (formReset)="st.reset($event)"></sf>
+  <st #st [data]="url" [columns]="columns" [req]="{body: query}" ></st>
+</nz-card>

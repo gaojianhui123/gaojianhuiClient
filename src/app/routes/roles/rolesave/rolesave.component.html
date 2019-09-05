@@ -1,0 +1,72 @@
+<page-header [breadcrumb]="breadcrumb">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <!--<nz-breadcrumb-item> <a [routerLink]="['/']">首页</a></nz-breadcrumb-item>-->
+      <nz-breadcrumb-item><a [routerLink]="['/role']">角色列表</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>{{title1}}</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+  <div class="breadcrumb">
+    <div class="ml-auto">
+      <h2>{{title1}}</h2>
+    </div>
+  </div>
+</page-header>
+<nz-card>
+<!--<form>-->
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5"  nzFor="title">角色名称</nz-form-label>
+    <nz-form-control  [nzSpan]="12">
+      <input  type="text" nz-input name="title"  placeholder="请填写标题！" style="width: 320px;" [(ngModel)]="role.title">
+      <!--<nz-form-explain  *ngIf="validateForm.get('title').dirty && validateForm.get('title').errors">请填写标题！</nz-form-explain>-->
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5"  nzFor="roletype">角色类型</nz-form-label>
+    <nz-form-control  [nzSpan]="12">
+      <nz-select   style="width: 320px;"  nzPlaceHolder="请选择"  [(ngModel)]="role.roletype">
+        <nz-option  [nzLabel]="'平台角色'"  [nzValue]="'0'"></nz-option>
+          <nz-option  [nzLabel]="'租户角色'"  [nzValue]="'1'"></nz-option>
+
+      </nz-select>
+      <!--<nz-form-explain  *ngIf="validateForm.get('title').dirty && validateForm.get('title').errors">请填写标题！</nz-form-explain>-->
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5"  nzFor="title">角色权限</nz-form-label>
+    <nz-form-control  [nzSpan]="12">
+      <nz-tree
+        #treeCom
+        [nzData]="protectedResourceTree"
+        nzShowLine="true"
+        nzMultiple="true">
+        <ng-template #nzTreeTemplate let-node>
+        <span >
+          <span [class.activenode]="node.isSelected">
+            <i nz-icon [type]="node.isSelected ? 'check-square' : 'border'" ></i>
+            <span class="folder-name" >{{node.title}}</span>
+            <!--<span class="folder-desc">{{node?.origin?.tyle | lowercase}}</span>-->
+          </span>
+        </span>
+        </ng-template>
+      </nz-tree>
+      <!--<nz-form-explain  *ngIf="validateForm.get('title').dirty && validateForm.get('title').errors">请填写标题！</nz-form-explain>-->
+    </nz-form-control>
+  </nz-form-item>
+
+
+
+  <div nz-row nzType="flex" nzJustify="center">
+      <nz-form-item nz-row style="margin-bottom:8px;">
+        <nz-form-control >
+          <button nz-button  [nzSize]="'large'" nzType="primary" (click)="closed()">关闭</button>
+          <button nz-button nzType="primary" nzSize="large" (click)="submitForm()">保存</button>
+        </nz-form-control>
+      </nz-form-item>
+  </div>
+
+
+<!--</form>-->
+</nz-card>

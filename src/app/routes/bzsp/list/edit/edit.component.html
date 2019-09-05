@@ -1,0 +1,105 @@
+<page-header [breadcrumb]="breadcrumb">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item><a [routerLink]="['/bzsp']">保障审批</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>保障申请审批</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+  <div class="breadcrumb">
+    <div class="ml-auto">
+      <h2>保障申请审批</h2>
+    </div>
+  </div>
+</page-header>
+
+<form nz-form>
+  <nz-collapse [nzBordered]="false">
+    <nz-collapse-panel [nzHeader]="''" [ngStyle]="{'color':'#f7f7f7'}" [nzActive]="true" [nzDisabled]='true'
+                       [nzShowArrow]='false'>
+      <div nz-row nzType="flex">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="bumen">填报部门</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-select  [nzAllowClear]="true" nzDisabled name="bumen" id="bumen" [(ngModel)]="baozhangshenqing.bumen" >
+                <nz-option *ngFor="let option of dictionarycontentPage.content" [nzLabel]="option.dicName" [nzValue]="option.id"></nz-option>
+              </nz-select>
+
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="tianBaoTime">填报日期</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-date-picker  [nzFormat]="'yyyy-MM-dd'" name="tianBaoTime" id="tianBaoTime" placeholder="请输入专案名称"
+                     [(ngModel)]="baozhangshenqing.tianBaoTime" disabled="true">
+              </nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="lpId">被调查人代号</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-select name="lpId" id="lpId" disabled="true"
+                         [(ngModel)]="baozhangshenqing.lpId" style="width: 100%;" nzPlaceHolder="请选择被调查人代号"
+                         (nzScrollToBottom)="loadMore()"  nzAllowClear>
+                <nz-option *ngFor="let o of optionLP" [nzValue]="o.id" [nzLabel]="o.daiHao"></nz-option>
+                <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+                  <i nz-icon type="loading" class="loading-icon"></i> Loading Data...
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="chengbanbumen">案件承办部门</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input name="chengbanbumen" id="chengbanbumen" placeholder="请输入留置人员房间号"
+                     [(ngModel)]="baozhangshenqing.chengbanbumen" disabled="true">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="matter">申请事项及具体需求</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <textarea nz-input  name="matter" id="matter" [(ngModel)]="baozhangshenqing.matter"
+                         nzPlaceHolder="请输入申请事项及具体需求" disabled="true">
+              </textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="apply">呈批情况</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <textarea nz-input  name="apply" id="apply"
+                         [(ngModel)]="baozhangshenqing.apply"
+                         nzPlaceHolder="请输入呈批情况" disabled="true">
+              </textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="remark">备注</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <textarea nz-input="" name="remark" id="remark" style="width: 100%;"
+                              [(ngModel)]="baozhangshenqing.remark" disabled="true">
+              </textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        </div>
+    </nz-collapse-panel>
+  </nz-collapse>
+  <br>
+
+  <div nz-row nzType="flex" nzJustify="center">
+    <nz-form-item nz-row style="margin-bottom:8px;">
+      <nz-form-control>
+        <button nz-button nzType="primary" nzSize="large" (click)="tongyi()" [nzLoading]="isLoading">同意</button>
+        <button nz-button nzType="primary" nzSize="large" (click)="jujue()" [nzLoading]="isLoading">拒绝</button>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>

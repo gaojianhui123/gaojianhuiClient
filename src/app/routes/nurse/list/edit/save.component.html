@@ -1,0 +1,300 @@
+<page-header [breadcrumb]="breadcrumb">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item><a [routerLink]="['/nurse']">每日情况列表</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>{{title1}}</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+  <div class="breadcrumb">
+    <div class="ml-auto">
+      <h2>{{title1}}</h2>
+    </div>
+  </div>
+</page-header>
+
+<form nz-form [formGroup]="validateForm">
+  <nz-collapse [nzBordered]="false">
+    <nz-collapse-panel [nzHeader]="''" [ngStyle]="{'color':'#f7f7f7'}" [nzActive]="true" [nzDisabled]="true"
+                       [nzShowArrow]='false'>
+      <div nz-row nzType="flex">
+        <div nz-col nzSpan="7">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="lienPersonnelid" style="font-weight: 700" nzRequired>代号
+            </nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-select [nzAllowClear]="true" [nzShowSearch]="true" [nzDisabled]="isDisabled"
+                         formControlName="lienPersonnelid" id="cateringMenu" [(ngModel)]="nurse.lienPersonnelid"
+                         nzPlaceHolder="请选择代号" (ngModelChange)="selectDaiHao()">
+                <nz-option *ngFor="let l of lienPersonnelcontentPage.content" [nzLabel]="l.daiHao"
+                           [nzValue]="l.id"></nz-option>
+              </nz-select>
+              <nz-form-explain
+                *ngIf="validateForm.get('lienPersonnelid').dirty && validateForm.get('lienPersonnelid').errors">
+                请选择代号
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="7">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="submitId">上报人</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input formControlName="submitId" id="submitId" placeholder="请输入上报人"
+                     [(ngModel)]="nurse.submitId">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="7">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="submitTime">上报时间</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-date-picker formControlName="submitTime" id="submitTime" [nzDisabled]="isDisabled"
+                              [nzFormat]="'yyyy-MM-dd'" [(ngModel)]="nurse.submitTime"
+                              (ngModelChange)="selectSubmitTime()"></nz-date-picker>
+              <nz-form-explain *ngIf="validateForm.get('submitTime').dirty && validateForm.get('submitTime').errors">
+                请选择上报时间
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+            <div nz-row>
+              <button nz-button nzType="primary" (click)="addTanHua()">新增谈话</button>
+            </div>
+      <div nz-row nzType="flex">
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-control [nzSm]="22" [nzXs]="24">
+              <!--              <nz-table #basicTable [nzData]="lienPersonnelTanHuaRelateLists">-->
+              <!--                <thead>-->
+              <!--                <tr>-->
+              <!--                  <th>谈话人</th>-->
+              <!--                  <th>开始时间</th>-->
+              <!--                  <th>结束时间</th>-->
+              <!--                  <th>备注</th>-->
+              <!--                  <th>操作</th>-->
+              <!--                </tr>-->
+              <!--                </thead>-->
+              <!--                <tbody>-->
+              <!--                <tr *ngFor="let relate of basicTable.data">-->
+              <!--                  <td nzShowExpand [(nzExpand)]="false"></td>-->
+              <!--                  <td>{{relate.id}}<span nz-tooltip nzTitle="{{relate?.tanHuaRen}}">{{((relate?.tanHuaRen?.length) === 5) ? (relate?.tanHuaRen.substring(0,5)):relate?.tanHuaRen}}</span></td>-->
+              <!--                  <td><span nz-tooltip nzTitle="{{relate?.talkStartTime}}">{{((relate?.talkStartTime?.length) === 19) ? (relate?.talkStartTime.substring(10,19)):relate?.talkStartTime}}</span></td>-->
+              <!--                  <td><span nz-tooltip nzTitle="{{relate?.talkEndTime}}">{{((relate?.talkEndTime?.length) === 19) ? (relate?.talkEndTime.substring(10,19)):relate?.talkEndTime}}</span></td>-->
+              <!--                  <td><span nz-tooltip nzTitle="{{relate?.remark}}">{{((relate?.remark?.length) === 7) ? (relate?.remark.substring(0,7)):relate?.remark}}</span></td>-->
+              <!--                  <td><button nz-button nzSize="small" nzType="primary" *ngIf="relate?.id" (click)="modify(relate)">修改</button></td>-->
+              <!--                </tr>-->
+              <!--                </tbody>-->
+              <!--              </nz-table>-->
+              <nz-table #nestedTable [nzData]="lPTanHuaRelateList" [nzPageSize]="10">
+                <thead>
+                <tr>
+                  <th nzShowExpand></th>
+                  <th>谈话人</th>
+                  <th>开始时间</th>
+                  <th>结束时间</th>
+                  <th>备注</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <ng-template ngFor let-relate [ngForOf]="nestedTable.data">
+                    <tr>
+                      <td nzShowExpand [(nzExpand)]="relate.expand"  (click)="getChild(relate)"></td>
+                      <td><span nz-tooltip nzTitle="{{relate?.tanHuaRen}}">{{((relate?.tanHuaRen?.length) > 15) ? (relate?.tanHuaRen.substring(0,15)+'...'):relate?.tanHuaRen}}</span></td>
+                      <td><span nz-tooltip nzTitle="{{relate?.talkStartTime}}">{{((relate?.talkStartTime?.length) === 19) ? (relate?.talkStartTime.substring(10,19)):relate?.talkStartTime}}</span></td>
+                      <td><span nz-tooltip nzTitle="{{relate?.talkEndTime}}">{{((relate?.talkEndTime?.length) === 19) ? (relate?.talkEndTime.substring(10,19)):relate?.talkEndTime}}</span></td>
+                      <td><span nz-tooltip nzTitle="{{relate?.remark}}">{{((relate?.remark?.length) > 15) ? (relate?.remark.substring(0,15)+'...'):relate?.remark}}</span></td>
+                      <td><a (click)="addTanHuaChild(relate)">添加谈话人</a></td>
+                    </tr>
+                    <tr [nzExpand]="relate.expand">
+                      <td></td>
+                      <td colspan="7">
+                        <nz-table #innerTable [nzData]="listOfChildrenData" nzSize="middle" [nzShowPagination]="false">
+                          <thead>
+                            <tr>
+                              <th>谈话人</th>
+                              <th>开始时间</th>
+                              <th>结束时间</th>
+                              <th>操作</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                                <tr *ngFor="let child of innerTable.data">
+                                  <td><span nz-tooltip nzTitle="{{child?.tanHuaRen}}">{{((child?.tanHuaRen?.length) === 5) ? (child?.tanHuaRen.substring(0,5)):child?.tanHuaRen}}</span></td>
+                                  <td><span nz-tooltip nzTitle="{{child?.talkStartTime}}">{{((child?.talkStartTime?.length) === 19) ? (child?.talkStartTime.substring(10,19)):child?.talkStartTime}}</span></td>
+                                  <td><span nz-tooltip nzTitle="{{child?.talkEndTime}}">{{((child?.talkEndTime?.length) === 19) ? (child?.talkEndTime.substring(10,19)):child?.talkEndTime}}</span></td>
+<!--                                  <td><button nz-button *ngIf="child.id" nzSize="small" (click)="modify(child)" nzType="primary">修改</button></td>-->
+                                  <td><a (click)="modify(child)">修改</a>
+                                  <nz-divider nzType="vertical"></nz-divider>
+                                  <a nz-popconfirm nzTitle="确定删除?" (nzOnConfirm)="deleteRelate(child.id)">删除</a></td>
+                                </tr>
+                          </tbody>
+                        </nz-table>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </tbody>
+              </nz-table>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row nzSpan="24">
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label [nzSm]="4" nzFor="cateringRemarks">餐饮情况</nz-form-label>
+            <nz-form-control [nzSm]="18">
+              <textarea nz-input formControlName="cateringRemarks" id="cateringRemarks" placeholder="请输入内容"
+                        [nzAutosize]="{ minRows: 5, maxRows: 16 }" [(ngModel)]="nurse.cateringRemarks"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="4" nzFor="conditionRemarks">情绪情况</nz-form-label>
+            <nz-form-control [nzSm]="18" [nzXs]="24">
+              <textarea nz-input formControlName="conditionRemarks" id="conditionRemarks" placeholder="请输入内容"
+                        [nzAutosize]="{ minRows: 5, maxRows: 16 }" [(ngModel)]="nurse.conditionRemarks"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="4" nzFor="restsRemarks">其他情况</nz-form-label>
+            <nz-form-control [nzSm]="18">
+              <textarea nz-input formControlName="restsRemarks" id="restsRemarks" placeholder="请输入内容"
+                        [nzAutosize]="{ minRows: 5, maxRows: 16 }" [(ngModel)]="nurse.restsRemarks"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="4" nzFor="noinquiry" style="flex: auto">被调查对象非讯问时间情况</nz-form-label>
+            <nz-form-control [nzSm]="18">
+              <input nz-input formControlName="noinquiry" id="noinquiry" placeholder="请输入内容"
+                     [(ngModel)]="nurse.noinquiry">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-collapse-panel>
+  </nz-collapse>
+
+  <br>
+
+  <div nz-row nzType="flex" nzJustify="center">
+    <nz-form-item nz-row style="margin-bottom:8px;">
+      <nz-form-control>
+        <button nz-button [nzSize]="'large'" nzType="primary" (click)="closed()">关闭</button>
+        <button nz-button nzType="primary" nzSize="large" (click)="submitForm()" [nzLoading]="isLoading">保存</button>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+
+</form>
+<!--添加模态框-->
+<nz-modal [(nzVisible)]="addTanHuaShow" nzTitle="新增谈话" (nzOnCancel)="cancelAddTanHua()" (nzOnOk)="saveAddTanHua()">
+  <form nz-form>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24">谈话人</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input  name="talkId" [(ngModel)]="addTanHuaRelate.tanHuaRen" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24">开始时间</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-date-picker
+          [nzMode]="'time'" nzShowTime
+          name="talkTimeOpen" [(ngModel)]="addTanHuaRelate.startTime">
+        </nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24">结束时间</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-date-picker
+          [nzMode]="'time'" nzShowTime
+          name="talkTimeClose" [(ngModel)]="addTanHuaRelate.endTime">
+        </nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24">备注</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <textarea rows="4" nz-input name="remark" [(ngModel)]="addTanHuaRelate.remark"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>
+<!--添加子集模态框-->
+<nz-modal [(nzVisible)]="addChildTanHuaShow" nzTitle="添加谈话人" (nzOnCancel)="cancelAddChildTanHua()" (nzOnOk)="saveAddChildTanHua()">
+  <form nz-form>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24">谈话人</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input  name="talkId" [(ngModel)]="addChildTanHuaRelate.tanHuaRen" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24">开始时间</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-date-picker
+          [nzMode]="'time'" nzShowTime
+          name="talkTimeOpen" [(ngModel)]="addChildTanHuaRelate.startTime">
+        </nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24">结束时间</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-date-picker
+          [nzMode]="'time'" nzShowTime
+          name="talkTimeClose" [(ngModel)]="addChildTanHuaRelate.endTime">
+        </nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24">备注</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <textarea rows="4" nz-input name="remark" [(ngModel)]="addChildTanHuaRelate.remark"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>
+<!--修改模态框-->
+<nz-modal [(nzVisible)]="isShow" nzTitle="修改" (nzOnCancel)="cancelModify()" (nzOnOk)="saveModify()">
+  <form nz-form>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24">谈话人</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input  name="talkId" [(ngModel)]="modifyRelate.tanHuaRen" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24">开始时间</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-date-picker
+          [nzMode]="'time'" nzShowTime
+          name="talkTimeOpen" [(ngModel)]="modifyRelate.startTime">
+        </nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24">结束时间</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-date-picker
+          [nzMode]="'time'" nzShowTime
+          name="talkTimeClose" [(ngModel)]="modifyRelate.endTime">
+        </nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24">备注</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <textarea rows="4" nz-input name="remark" [(ngModel)]="modifyRelate.remark"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>
+
+
+
+

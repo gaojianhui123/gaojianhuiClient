@@ -1,0 +1,37 @@
+<page-header [breadcrumb]="breadcrumb">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item><a>看护管理</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>谈话名单查询</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+</page-header>
+
+<!--<nz-card>-->
+  <!--<div style="margin-bottom: 10px">-->
+    <!--<button nz-button nzType="primary" (click)="exportYongYao(queryParam.query.lpId, '0')">导出</button>-->
+  <!--</div>-->
+  <!--<sf mode="search" [schema]="searchSchema" (formSubmit)="queryParam.query=$event; load(queryParam)"-->
+      <!--(formReset)="reset($event)"></sf>-->
+  <!--<st #st [data]="url" [columns]="columns" [req]="{body: queryParam}" [res]="{process:processData}" [singleSort]="{key:'sortparam'}"></st>-->
+
+
+<!--</nz-card>-->
+
+<nz-card>
+  <div nz-row nzType="flex">
+    <div nz-col nzSpan="18">
+      <sf mode="search" [schema]="searchSchema" (formSubmit)="queryParam.query=$event; load(queryParam)"
+      (formReset)="reset($event)"></sf>
+    </div>
+    <div   nz-col nzSpan="6">
+      <button [disabled]="isdisabled" nz-button nzType="primary" (click)="exportTanHuaAll()">一键导出
+      </button>
+    </div>
+  </div><br>
+
+  <st #st [data]="url" [columns]="columns" [req]="{body: queryParam}" [res]="{process:processData}" [singleSort]="{key:'sortparam'}"></st>
+
+</nz-card>
+
+

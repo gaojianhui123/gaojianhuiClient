@@ -1,0 +1,151 @@
+<page-header [breadcrumb]="breadcrumb"  [action]="action">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item> <a [routerLink]="['/']">系统管理</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>受限资源管理</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+  <ng-template #action>
+    <i nz-icon></i>
+         <button (click)="showModal()" nz-button nzType="primary"> <i class="anticon anticon-plus-circle"></i>新增受限资源</button>
+  </ng-template>
+</page-header>
+<nz-card>
+  <form nz-form [formGroup]="validateForm">
+      <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle"  [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()">
+        <ng-template #modalTitle>
+          <span style="color: #17a2b8;font-weight:700;">{{title1}}</span>
+        </ng-template>
+
+          <nz-form-item>
+            <nz-form-label [nzSpan]="5" nzFor="pid" >选择上级节点</nz-form-label>
+            <nz-form-control  [nzSpan]="12">
+              <nz-tree-select
+                formControlName="pid"
+                style="width: 320px"
+                [nzNodes]="protectedResources"
+                nzShowSearch
+                nzPlaceHolder="请选择上级节点"
+                [(ngModel)]="protectedResource.pid"
+                [nzDisabled]="false"
+                (ngModelChange)="onChange($event)">
+              </nz-tree-select>
+              <nz-form-explain  >请选择上级节点!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzSpan]="5" nzFor="title" >标题</nz-form-label>
+            <nz-form-control  [nzSpan]="12">
+              <input  type="text" nz-input formControlName="title"  placeholder="请填写标题！"  style="width: 320px;" [(ngModel)]="protectedResource.title">
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzSpan]="5" nzFor="url" >url</nz-form-label>
+            <nz-form-control  [nzSpan]="12">
+              <input  type="text" nz-input formControlName="url"  placeholder="请填写url"  style="width: 320px;" [(ngModel)]="protectedResource.url">
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzSpan]="5" nzFor="tyle" >类型</nz-form-label>
+            <nz-form-control  [nzSpan]="12">
+              <nz-select style="width: 320px;" formControlName="tyle" [(ngModel)]="protectedResource.tyle" nzAllowClear nzPlaceHolder="请选择类型">
+                <nz-option nzValue="menu"  style="color: #6f42c1" nzLabel="菜单"></nz-option>
+                <nz-option nzValue="button" nzLabel="按钮"></nz-option>
+                <nz-option nzValue="api" nzLabel="访问地址"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzSpan]="5" nzFor="icon" >
+              图标<i *ngIf="protectedResource.iconclass&&protectedResource.iconclass.startsWith('anticon')" class="anticon {{protectedResource.iconclass}}" [ngStyle]="{'color': protectedResource.iconcolor}"></i>
+              <i *ngIf="protectedResource.iconclass&&!protectedResource.iconclass.startsWith('anticon')" class="fa {{protectedResource.iconclass}}" [ngStyle]="{'color': protectedResource.iconcolor}"></i>
+            </nz-form-label>
+            <nz-form-control  [nzSpan]="12">
+              <nz-select [nzDropdownClassName]="'iconselect'" formControlName="icon"  style="width: 320px;"  nzShowSearch nzAllowClear nzPlaceHolder="请选择图标"  [(ngModel)]="protectedResource.iconclass">
+                <nz-option nzCustomContent *ngFor="let i of icons" [nzLabel]="i.label"  [nzValue]="i.value">
+                  <i *ngIf="i.value&&i.value.startsWith('anticon')" class="anticon {{i.value}}"></i>
+                  <i *ngIf="i.value&&!i.value.startsWith('anticon')" class="fa {{i.value}}"></i>
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzSpan]="5" nzFor="iconcolor" >图标颜色</nz-form-label>
+            <nz-form-control  [nzSpan]="12">
+              <input  type="text" nz-input formControlName="iconcolor"  placeholder="   请选择颜色"  style="width: 320px;" id="dd"  [(colorPicker)]="protectedResource.iconcolor"  [style.background]="color" cpOutputFormat="hex" cpPosition="top"  cpOKButton="true"
+                      cpOKButtonText="确定" cpCancelButton="true" [(ngModel)]="protectedResource.iconcolor" colorPickerSelect  cpCancelButtonText="取消">
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzSpan]="5" nzFor="sortindex" >排序（数字）</nz-form-label>
+            <nz-form-control  [nzSpan]="12">
+              <input  type="number" nz-input formControlName="sortindex"  placeholder="请填写排序"  style="width: 320px;" [(ngModel)]="protectedResource.sortindex" >
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzSpan]="5" nzFor="description" >备注</nz-form-label>
+            <nz-form-control  [nzSpan]="12">
+              <input  type="text" nz-input formControlName="description"  placeholder="  请填写备注"  style="width: 320px;" [(ngModel)]="protectedResource.description">
+            </nz-form-control>
+          </nz-form-item>
+
+        <ng-template #modalFooter>
+          <button nz-button nzType="default" (click)="handleCancel()">返回</button>
+          <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">提交</button>
+        </ng-template>
+      </nz-modal>
+  </form>
+
+  <nz-table #nzTable [nzData]="protectedResources" [nzLoading]="basicTableLoading">
+    <thead>
+    <tr>
+      <th nzWidth="20%" style="font-weight:700">图标</th>
+      <th nzWidth="20%"  style="font-weight:700">名称</th>
+      <th nzWidth="20%"  style="font-weight:700">类型</th>
+      <th nzWidth="20%"  style="font-weight:700">排序</th>
+      <th nzWidth="100px"  style="font-weight:700">操作区</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-template ngFor let-data [ngForOf]="nzTable.data">
+      <ng-template ngFor let-item [ngForOf]="expandDataCache[data.id]">
+        <tr *ngIf="(item.parent&&item.parent.expand)||!(item.parent)" >
+          <td (nzCheckedChange)="refreshStatus($event)"
+              [nzIndentSize]="item.level*20"
+              [nzShowExpand]="item.children"
+              [(nzExpand)]="item.expand"
+
+              (nzExpandChange)="collapse(expandDataCache[data.id],item,$event)"  >
+            <i *ngIf="item.iconclass&&item.iconclass.startsWith('anticon')" class="anticon {{item.iconclass}}" [ngStyle]="{'color': item.iconcolor}"></i>
+            <i *ngIf="item.iconclass&&!item.iconclass.startsWith('anticon')" class="fa {{item.iconclass}}" [ngStyle]="{'color': item.iconcolor}"></i>
+          </td>
+          <td>{{item.title}}</td>
+          <td>{{item.tyle}}</td>
+          <td>{{item.sortindex}}</td>
+          <td style="min-width: 100px;">
+            <button nz-button nzType="primary" (click)="showModalEdit(item)" [nzSize]="'small'">编辑</button>
+            <nz-divider nzType="vertical"></nz-divider>
+            <button  nz-button nzType="danger" (click)="showModalDeleted(item)" [nzSize]="'small'">删除</button>
+          </td>
+        </tr>
+      </ng-template>
+    </ng-template>
+    </tbody>
+  </nz-table>
+
+  <ng-template #contentTemplate>
+    <div class="form-row " style="display: flex;width: 180px;align-content: center">
+
+        <div *ngFor="let o of iconList" (click)='clickCon(o)'><i class="anticon {{o.nzValue}}" style="font-size: 25px;margin: 2px;" ></i></div>
+
+    </div>
+
+  </ng-template>
+</nz-card>

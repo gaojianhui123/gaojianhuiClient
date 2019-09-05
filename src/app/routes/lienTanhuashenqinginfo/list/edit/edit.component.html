@@ -1,0 +1,131 @@
+<page-header [breadcrumb]="breadcrumb">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item><a [routerLink]="['/tanhuashenqinginfo']">谈话申请列表</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>{{title1}}</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+  <div class="breadcrumb">
+    <div class="ml-auto">
+      <h2>{{title1}}</h2>
+    </div>
+  </div>
+</page-header>
+<form nz-form [formGroup]="validateForm">
+  <nz-collapse [nzBordered]="false">
+    <nz-collapse-panel [nzHeader]="''" [ngStyle]="{'color':'#f7f7f7'}" [nzActive]="true" [nzDisabled]='true'
+                       [nzShowArrow]='false'>
+      <div nz-row nzType="flex">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="bumen">填报部门</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-select  [nzAllowClear]="true"  formControlName="bumen" id="bumen" [(ngModel)]="tanhuashenqing.bumen"
+                          (ngModelChange)="selectBuMen()" nzPlaceHolder="请选择填报部门">
+                <nz-option *ngFor="let option of dictionarycontentPage.content" [nzLabel]="option.dicName" [nzValue]="option.id"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="lpId">被调查人代号</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-select formControlName="lpId" id="lpId"
+                         [(ngModel)]="tanhuashenqing.lpId" style="width: 100%;" nzPlaceHolder="请选择被调查人代号" nzAllowClear>
+                <nz-option *ngFor="let o of lienPersonnels" [nzValue]="o.id" [nzLabel]="o.daiHao"></nz-option>
+                <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+                  <i nz-icon type="loading" class="loading-icon"></i> Loading Data...
+                </nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="validateForm.get('lpId').dirty && validateForm.get('lpId').errors">
+                此项为必填!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="tianbaoren">填报人</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input formControlName="tianbaoren" id="tianbaoren"
+                     [(ngModel)]="tanhuashenqing.tianbaoren" placeholder="请填写填报人">
+              <nz-form-explain *ngIf="validateForm.get('tianbaoren').dirty && validateForm.get('tianbaoren').errors">
+                此项为必填!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="tianBaoTime">填报日期</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-date-picker [nzFormat]="'yyyy-MM-dd'"  formControlName="tianBaoTime" id="tianBaoTime"
+                     [(ngModel)]="tanhuashenqing.tianBaoTime">
+              </nz-date-picker>
+              <nz-form-explain *ngIf="validateForm.get('tianBaoTime').dirty && validateForm.get('tianBaoTime').errors">
+                此项为必填!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+<!--        <div nz-col nzSpan="24">-->
+<!--          <nz-form-item>-->
+<!--            <nz-form-label [nzSm]="3" [nzXs]="24" nzRequired nzFor="renyuan">选择人员</nz-form-label>-->
+<!--            <nz-form-control [nzSm]="19" [nzXs]="24">-->
+<!--                <nz-select  formControlName="renyuan" id="renyuan" nzMode="multiple"-->
+<!--                           [(ngModel)]="tanhuashenqing.renyuan" style="width: 100%;" (ngModelChange)="selectRenyuanChange()" nzPlaceHolder="请选择人员"  nzAllowClear>-->
+<!--                  <nz-option *ngFor="let e of entranceGuardStaffDtos" [nzLabel]="e.emplyName+'_'+e.emplyId" [nzValue]="e.emplyId"></nz-option>-->
+<!--                </nz-select>-->
+<!--              <ng-template #tagPlaceHolder let-selectedList> and {{ selectedList.length }} more selected </ng-template>-->
+<!--              <nz-form-explain *ngIf="validateForm.get('renyuan').dirty && validateForm.get('renyuan').errors">-->
+<!--                  此项为必填!-->
+<!--                </nz-form-explain>-->
+<!--            </nz-form-control>-->
+<!--          </nz-form-item>-->
+<!--        </div>-->
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label [nzSm]="3" [nzXs]="24" nzRequired nzFor="renyuan">选择人员</nz-form-label>
+            <nz-form-control [nzSm]="19" [nzXs]="24">
+              <ng-select [searchable]="true" formControlName="renyuan" id="renyuan" [multiple]="true"
+                         [(ngModel)]="tanhuashenqing.renyuan" (ngModelChange)="selectRenyuanChange()"
+                         placeholder="请选择人员">
+                <ng-option *ngFor="let e of entranceGuardStaffDtos"  [value]="e.emplyId">
+                  {{e.emplyName+'_'+e.emplyId}}
+                </ng-option>
+              </ng-select>
+              <nz-form-explain *ngIf="validateForm.get('renyuan').dirty && validateForm.get('renyuan').errors">
+                此项为必填!
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-collapse-panel>
+  </nz-collapse>
+  <br>
+  <nz-collapse [nzBordered]="false">
+    <nz-collapse-panel [nzHeader]="'办案人员信息'" [nzActive]="true" [nzDisabled]='false' [nzShowArrow]='true'>
+      <div nz-row nzType="flex">
+        <div nz-col *ngFor="let u of renyuanxinxi" style="margin-left: 20px">
+          <nz-card nzHoverable style="width:200px;" [nzCover]="coverTemplate">
+            <nz-card-meta nzTitle="姓名：{{u?.employeeName}}" nzDescription="编号：{{u?.employeeId}}"></nz-card-meta>
+          </nz-card>
+          <ng-template #coverTemplate>
+            <img style="height: 198px;width: 198px" alt="暂无照片" src="{{photourl}}{{u?.photo}}"/>
+          </ng-template>
+        </div>
+      </div>
+    </nz-collapse-panel>
+  </nz-collapse>
+
+  <div nz-row nzType="flex" nzJustify="center">
+    <nz-form-item nz-row style="margin-bottom:8px;">
+      <nz-form-control>
+        <button nz-button  [nzSize]="'large'" nzType="primary" (click)="closed()">关闭</button>
+        <button nz-button nzType="primary" nzSize="large" (click)="submitForm()" [nzLoading]="isLoading">保存并提交</button>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>

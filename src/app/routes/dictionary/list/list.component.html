@@ -1,0 +1,16 @@
+<page-header [breadcrumb]="breadcrumb" [action]="action">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item><a>系统管理</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>字典管理</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+  <ng-template #action>
+    <button (click)="add()" nz-button nzType="primary">字典录入</button>
+  </ng-template>
+</page-header>
+
+<nz-card>
+  <sf mode="search" [schema]="searchSchema" (formSubmit)="query.query = $event;st.reset(query)" (formReset)="reset($event)"></sf>
+  <st #st [res]="{process: processData}" [data]="url" [columns]="columns" [req]="{body:query}"></st>
+</nz-card>

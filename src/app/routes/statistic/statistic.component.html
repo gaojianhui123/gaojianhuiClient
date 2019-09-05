@@ -1,0 +1,30 @@
+<page-header [breadcrumb]="breadcrumb" [action]="">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item><a>统计分析</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>留置人员身体情况趋势图</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+</page-header>
+<nz-card style="margin-top: 40px">
+<div>
+  <div class="form-row align-items-center" style="display: flex; margin-left: 10px;">
+    <nz-form-item nzFlex style="margin-top: 23px; margin-left: 200px; margin-right: 20px">
+      <nz-form-label>代号</nz-form-label>
+      <nz-form-control>
+      <nz-select style="width: 180px; margin-left: 10px" nzShowSearch [nzAllowClear]="true" [(ngModel)]="lId"
+                 nzPlaceHolder="请选择代号">
+        <nz-option *ngFor="let o of optionLP" [nzValue]="o.id" [nzLabel]="o.daiHao"></nz-option>
+      </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+      <nz-range-picker [nzFormat]="'yyyy-MM-dd'" [(ngModel)]="tijianshijian"></nz-range-picker>
+    <div style="margin-left: 10px">
+      <button nz-button style="margin-left: 20px" nzType="primary"  nzSize="default" (click)="select()" nzSearch>查询</button>
+    </div>
+  </div>
+</div>
+
+
+<div echarts [options]="option" class="demo-chart"></div>
+</nz-card>
