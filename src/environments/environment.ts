@@ -3,9 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  SERVER_URL: `http://localhost:8083/`,
-  FILESERVER_URL: `http://localhost:8083/`,
-  FILEUPLOAD_URL: `http://localhost:8083/file/upload`,
+  SERVER_URL: `http://localhost:8080/`,
+  FILESERVER_URL: `http://localhost:8080/`,
+  FILEUPLOAD_URL: `http://localhost:8080/file/upload`,
   production: false,
   useHash: true,
   hmr: false,
