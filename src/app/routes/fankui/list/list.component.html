@@ -1,9 +1,0 @@
-<page-header>
-  <ng-template #action>
-    <!--<button (click)="add()" nz-button nzType="primary">新建</button>-->
-  </ng-template>
-</page-header>
-<nz-card>
-  <sf mode="search" [schema]="searchSchema" (formSubmit)="load($event)" (formReset)="reset($event)"></sf>
-  <st #st [data]="url" [columns]="columns" [req]="{body: queryParam}" [res]="{process:processData}"></st>
-</nz-card>

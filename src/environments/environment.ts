@@ -6,10 +6,6 @@ export const environment = {
   SERVER_URL: `http://localhost:8083/`,
   FILESERVER_URL: `http://localhost:8083/`,
   FILEUPLOAD_URL: `http://localhost:8083/file/upload`,
-  // 连接立方后台url
-  photo_URL: `http://192.168.18.254:8087/ocs/`,
-  // photo_URL: `http://192.168.1.107:8087/ocs/`,
-  // photo_URL: `http://120.26.9.130:80/test/`,
   production: false,
   useHash: true,
   hmr: false,

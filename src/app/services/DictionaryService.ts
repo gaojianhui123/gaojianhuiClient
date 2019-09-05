@@ -4,7 +4,6 @@ import {ApiService} from './api.service';
 import {Observable} from 'rxjs/index';
 import { SanyiPage } from '../model/page/SanyiPage';
 import { QueryParam } from '../model/page/QueryParam';
-import { LienPersonnel } from '../model/LienPersonnel';
 
 /**
  * DictionaryService 对应后台controller

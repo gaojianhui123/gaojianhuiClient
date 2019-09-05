@@ -1,6 +1,0 @@
-<page-header>
-</page-header>
-<nz-card>
-  <sf mode="search" [schema]="searchSchema" (formSubmit)="query.query =$event; load($event)" (formReset)="reset($event)"></sf>
-  <st #st [res]="{process:processData}" [data]="url" [columns]="columns" [req]="{body:query}"></st>
-</nz-card>
